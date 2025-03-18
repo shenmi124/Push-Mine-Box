@@ -1,15 +1,20 @@
 let playerPosition = []
 let cluePosition = []
+let winPosition = []
 
 function getPosition(){
     playerPosition = []
     cluePosition = []
+    winPosition = []
     for(let i in player.mine.grid){
         if(player.mine.grid[i]['item']=='arrow'){
             playerPosition.push(i)
         }
         if(player.mine.grid[i]['item']=='clue'){
             cluePosition.push(i)
+        }
+        if(player.mine.grid[i]['wall']=='win'){
+            winPosition.push(i)
         }
     }
 }
@@ -26,22 +31,30 @@ function getRightClue(id){
     if(n(player.mine.grid[id]['data']).neq(flagNum)){
         canWin = false
     }
+    if(n(player.mine.grid[id]['data']).lt(flagNum)){
+        return 'more'
+    }
     return canWin
 }
 
 function getCanWin(){
     let canWin = true
     for(let i in cluePosition){
-        canWin = getRightClue(cluePosition[i])
+        if(getRightClue(cluePosition[i])!==true){
+            canWin = false
+        }
     }
     return canWin
 }
 
-function getCanMove(playerPosition, move){
+function getCanMove(playerPosition, move, type){
     let canMove = true
     let position = Number(playerPosition)+move
     if(player.mine.grid[position]['item']=='clue'){
-        canMove = getCanMove(position, move)
+        if(getRightClue(position)=='more'){
+            return false
+        }
+        canMove = getCanMove(position, move, 'clue')
         if(canMove){
             playerPushBox(position, move)
         }
@@ -52,8 +65,9 @@ function getCanMove(playerPosition, move){
     if(player.mine.grid[position]['wall']=='win'){
         if(!getCanWin()){
             canMove = false
-        }else{
-            inputLevel(player.mine.grid[position]['data'][0], player.mine.grid[position]['data'][1])
+        }else if(type=='player'){
+            inputLevel(player.mine.grid[position]['meta'][0], player.mine.grid[position]['meta'][1])
+            return false
         }
     }
     return canMove
@@ -75,12 +89,18 @@ function playerMove(direction){
     if(direction=='a'){move = -1}
     if(direction=='s'){move = 100}
     if(direction=='d'){move = 1}
+
     for(let i in playerPosition){
-        let canMove = getCanMove(playerPosition[i], move)
+        let canMove = getCanMove(playerPosition[i], move, 'player')
         if(canMove){
             player.mine.grid[playerPosition[i]]['item'] = 'none'
             player.mine.grid[Number(playerPosition[i])+move]['item'] = 'arrow'
         }
+    }
+
+    for(let i in winPosition){
+        player.mine.grid[winPosition[i]]['wall'] = 'blank'
+        player.mine.grid[winPosition[i]]['wall'] = 'win'
     }
     
     getPosition()

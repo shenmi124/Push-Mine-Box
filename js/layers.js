@@ -21,8 +21,22 @@ addLayer("1layer", {
 
 function resetLevel(){
     for(let i in player.mine.grid){
-        player.mine.grid[i] = {wall: 'none', item: 'none', data: 'none'}
+        player.mine.grid[i] = {wall: 'none', item: 'none', data: 'none', meta: 'none'}
     }
+}
+
+function outputLevel(){
+    let output = {}
+    for(let i in player.mine.grid){
+        for(let data in player.mine.grid[i]){
+            if(player.mine.grid[i][data]!=='none'){
+                output[i] ??= {}
+                output[i][data] = player.mine.grid[i][data]
+            }
+        }
+    }
+    console.log(output)
+    return output
 }
 
 function inputLevel(world, level){
@@ -100,7 +114,8 @@ addLayer("mine", {
         console: false,
         type: 'wall',
         choose: 'blank',
-        data: 'none'
+        data: 'none',
+        meta: 'none',
     }},
     color: "yellow",
     type: "none",
@@ -114,7 +129,7 @@ addLayer("mine", {
         rows: 15,
         cols: 15,
         getStartData(id){
-            return {wall: 'none', item: 'none', data: 'none'}
+            return {wall: 'none', item: 'none', data: 'none', meta: 'none'}
         },
         getCanClick(){
             return true
@@ -136,7 +151,9 @@ addLayer("mine", {
                 return '<span style="font-size: 32px">♿</span>'
             }
             if(data['item']=='clue'){
-                if(getRightClue(id)){
+                if(getRightClue(id)=='more'){
+                    return '<span style="color: red">'+format(data['data'], 0)+'</span>'
+                }else if(getRightClue(id)){
                     return '<span style="color: yellow">'+format(data['data'], 0)+'</span>'
                 }
                 if(data['wall']=='blank'){
@@ -217,21 +234,23 @@ addLayer("mine", {
             },
         },
 
+        save: {
+            display(){return '保存'},
+            canClick(){return true},
+            unlocked(){return player.mine.console},
+            onClick(){
+                All[player.mine.lastWorld][player.mine.lastLevel] = outputLevel()
+            },
+            style(){
+                return {'width': '75px', 'height': '75px', 'background': 'white'}
+            },
+        },
         output: {
             display(){return '导出'},
             canClick(){return true},
             unlocked(){return player.mine.console},
             onClick(){
-                let output = {}
-                for(let i in player.mine.grid){
-                    for(let data in player.mine.grid[i]){
-                        if(player.mine.grid[i][data]!=='none'){
-                            output[i] ??= {}
-                            output[i][data] = player.mine.grid[i][data]
-                        }
-                    }
-                }
-                console.log(output)
+                outputLevel()
             },
             style(){
                 return {'width': '75px', 'height': '75px', 'background': 'red'}
@@ -280,7 +299,7 @@ addLayer("mine", {
         win: {
             display(){
                 if(player.mine.choose=='win'){
-                    return '终点<br>'+player.mine.data
+                    return '终点<br>'+player.mine.meta
                 }
                 return '终点'
             },
@@ -290,7 +309,7 @@ addLayer("mine", {
                 edit({
                     type: 'wall',
                     choose: 'win',
-                    data: [prompt('输入世界名'), prompt('输入关卡名')],
+                    meta: [prompt('输入世界名'), prompt('输入关卡名')],
                 })
             },
             style(){
@@ -345,7 +364,7 @@ addLayer("mine", {
                     ['row', [['clickable', 'w']]],
                     ['row', [['clickable', 'a'], ['clickable', 's'], ['clickable', 'd']]],
                     'blank',
-                    ['row', [['clickable', 'output'], 'blank', ['clickable', 'input']]],
+                    ['row', [['clickable', 'save'], 'blank', ['clickable', 'output'], 'blank', ['clickable', 'input']]],
                     'blank',
                     ['row', [['clickable', 'none'], ['clickable', 'clue'], ['clickable', 'mine']]],
                     ['row', [['clickable', 'arrow'], ['clickable', 'win']]],
