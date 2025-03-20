@@ -58,6 +58,7 @@ function edit(Class){
     player.mine.type = Class.type ?? 'none'
     player.mine.choose = Class.choose ?? 'none'
     player.mine.data = Class.data ?? 'none'
+    player.mine.meta = Class.meta ?? 'none'
 }
 /*
 addLayer("mine", {
@@ -148,7 +149,11 @@ addLayer("mine", {
         },
         getDisplay(data, id){
             if(data['item']=='arrow'){
-                return '<span style="font-size: 32px">♿</span>'
+                if(data['data']){
+                    return '<span style="font-size: 32px">♿</span>'
+                }else{
+                    return '<span style="font-size: 32px">🧊</span>'
+                }
             }
             if(data['item']=='clue'){
                 if(getRightClue(id)=='more'){
@@ -290,6 +295,7 @@ addLayer("mine", {
                 edit({
                     type: 'item',
                     choose: 'arrow',
+                    data: true,
                 })
             },
             style(){

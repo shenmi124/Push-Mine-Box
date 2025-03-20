@@ -295,161 +295,139 @@ let world0 = {
         }
     },
     level4: {
-        "402": {
-            "wall": "blank"
-        },
-        "403": {
-            "wall": "blank"
-        },
-        "404": {
-            "wall": "blank"
-        },
-        "406": {
-            "wall": "blank"
-        },
         "407": {
-            "wall": "blank"
+            "item": "clue",
+            "data": "2"
         },
-        "408": {
-            "wall": "blank"
+        "410": {
+            "data": "1"
         },
-        "409": {
-            "wall": "blank"
-        },
-        "412": {
-            "wall": "blank"
-        },
-        "413": {
-            "wall": "blank"
-        },
-        "503": {
+        "505": {
             "wall": "blank"
         },
         "506": {
             "wall": "blank"
         },
+        "507": {
+            "wall": "blank",
+            "data": "2"
+        },
+        "508": {
+            "wall": "blank",
+            "item": "mine"
+        },
         "509": {
-            "wall": "blank"
+            "wall": "blank",
+            "data": "3"
         },
-        "511": {
-            "wall": "blank"
-        },
-        "514": {
-            "wall": "blank"
-        },
-        "603": {
+        "605": {
             "wall": "blank"
         },
         "606": {
-            "wall": "blank"
+            "wall": "blank",
+            "item": "mine",
+            "data": "4"
+        },
+        "607": {
+            "wall": "blank",
+            "data": "2"
+        },
+        "608": {
+            "wall": "blank",
+            "item": "mine",
+            "data": "2"
         },
         "609": {
             "wall": "blank"
         },
-        "611": {
-            "wall": "blank"
-        },
-        "703": {
+        "705": {
             "wall": "blank"
         },
         "706": {
-            "wall": "blank"
+            "wall": "blank",
+            "item": "clue",
+            "data": "1"
         },
         "707": {
-            "wall": "blank"
+            "wall": "blank",
+            "data": "4"
         },
         "708": {
-            "wall": "blank"
+            "wall": "blank",
+            "data": "4"
         },
-        "711": {
-            "wall": "blank"
+        "709": {
+            "wall": "blank",
+            "item": "mine"
         },
-        "803": {
+        "805": {
             "wall": "blank"
         },
         "806": {
             "wall": "blank"
         },
+        "807": {
+            "wall": "blank",
+            "item": "clue",
+            "data": "4"
+        },
+        "808": {
+            "wall": "blank"
+        },
         "809": {
-            "wall": "blank"
+            "wall": "blank",
+            "item": "mine"
         },
-        "811": {
-            "wall": "blank"
-        },
-        "903": {
-            "wall": "blank"
+        "905": {
+            "wall": "blank",
+            "item": "arrow"
         },
         "906": {
+            "wall": "blank"
+        },
+        "907": {
+            "wall": "blank"
+        },
+        "908": {
             "wall": "blank"
         },
         "909": {
             "wall": "blank"
         },
-        "911": {
-            "wall": "blank"
-        },
-        "914": {
-            "wall": "blank"
-        },
-        "1003": {
-            "wall": "blank"
+        "1005": {
+            "wall": "win",
+            "meta": [
+                "world0",
+                "level5"
+            ]
         },
         "1006": {
             "wall": "blank"
         },
         "1007": {
-            "wall": "blank"
+            "wall": "blank",
+            "data": "2"
         },
         "1008": {
-            "wall": "blank"
+            "wall": "blank",
+            "data": "2"
         },
-        "1012": {
-            "wall": "blank"
-        },
-        "1013": {
-            "wall": "blank"
-        },
-        "1113": {
-            "item": "mine"
-        },
-        "1214": {
-            "item": "mine"
-        },
-        "1307": {
-            "item": "mine"
-        },
-        "1308": {
-            "item": "mine"
-        },
-        "1309": {
-            "item": "mine"
-        },
-        "1310": {
-            "item": "mine"
-        },
-        "1311": {
-            "item": "mine"
-        },
-        "1312": {
-            "item": "mine"
-        },
-        "1313": {
-            "item": "mine"
-        },
-        "1314": {
-            "item": "mine"
-        },
-        "1315": {
-            "item": "mine"
-        },
-        "1414": {
-            "item": "mine"
-        },
-        "1513": {
-            "item": "mine"
+        "1009": {
+            "wall": "blank",
+            "data": "2"
         }
     },
     level5: {
+        "805": {
+            "wall": "blank",
+            "item": "arrow"
+        },
+    },
+    level6: {
+        "805": {
+            "wall": "blank",
+            "item": "arrow"
+        },
     },
     level9: {
         "503": {
