@@ -1,110 +1,9 @@
-addLayer("1layer", {
-    name: "sideLayer1",
-    position: -1,
+addLayer("mine", {
+    name: "扫雷",
+    symbol: "扫雷",
+    symbolI18N: "扫雷",
+    position: 0,
     row: 0,
-    symbol() {return '主要页面'}, // This appears on the layer's node. Default is the id with the first letter capitalized
-    symbolI18N() {return '主要页面'}, // Second name of symbol for internationalization (i18n) if internationalizationMod is enabled (in mod.js)
-    small: true,// Set to true to generate a slightly smaller layer node
-    nodeStyle: {"font-size": "15px", "height": "30px"},// Style for the layer button
-    startData() { return {
-        unlocked: true,
-        points: new Decimal(0),// This currently does nothing, but it's required. (Might change later if you add mechanics to this layer.)
-    }},
-    color: "#fefefe",
-    type: "none",
-    tooltip(){return false},
-    layerShown(){return true},// If any layer in the array is unlocked, it will returns true. Otherwise it will return false.
-	tabFormat: [
-        ["display-text", function() { return getPointsDisplay() }]
-    ],
-})
-
-function resetLevel(){
-    for(let i in player.mine.grid){
-        player.mine.grid[i] = {wall: 'none', item: 'none', data: 'none', meta: 'none'}
-    }
-}
-
-function outputLevel(){
-    let output = {}
-    for(let i in player.mine.grid){
-        for(let data in player.mine.grid[i]){
-            if(player.mine.grid[i][data]!=='none'){
-                output[i] ??= {}
-                output[i][data] = player.mine.grid[i][data]
-            }
-        }
-    }
-    console.log(output)
-    return output
-}
-
-function inputLevel(world, level){
-    resetLevel()
-    let input = All[world][level]
-    for(let i in input){
-        for(let type in input[i]){
-            player.mine.grid[i][type] = input[i][type]
-        }
-    }
-
-    player.mine.lastWorld = world
-    player.mine.lastLevel = level
-
-    getPosition()
-}
-
-function edit(Class){
-    player.mine.type = Class.type ?? 'none'
-    player.mine.choose = Class.choose ?? 'none'
-    player.mine.data = Class.data ?? 'none'
-    player.mine.meta = Class.meta ?? 'none'
-}
-/*
-addLayer("mine", {
-    name: "扫雷", // This is optional, only used in a few places, If absent it just uses the layer id
-    symbol: "扫雷", // This appears on the layer's node. Default is the id with the first letter capitalized
-    symbolI18N: "扫雷", // Second name of symbol for internationalization (i18n) if internationalizationMod is enabled
-    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
-    row: 0, // Row the layer is in on the tree (0 is the first row)
-    startData() { return {
-        unlocked: true,
-		points: new Decimal(0),
-
-        console: false,
-        type: 'wall',
-        choose: 'blank',
-        data: 'none'
-    }},
-    color: "yellow",
-    type: "none",
-    microtabs: {
-        tab: {
-            "main": {
-                name(){return '主页'},
-                nameI18N(){return 'main'},
-                content: [
-                    'grid',
-                    'blank',
-                    'blank',
-                    'blank',
-                ],
-            },
-        },
-    },
-    tabFormat: [
-       "blank",
-       ["microtabs","tab"]
-    ],
-    layerShown(){return true},
-})*/
-
-addLayer("mine", {
-    name: "扫雷", // This is optional, only used in a few places, If absent it just uses the layer id
-    symbol: "扫雷", // This appears on the layer's node. Default is the id with the first letter capitalized
-    symbolI18N: "扫雷", // Second name of symbol for internationalization (i18n) if internationalizationMod is enabled
-    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
-    row: 0, // Row the layer is in on the tree (0 is the first row)
     startData() { return {
         unlocked: true,
 		points: new Decimal(0),
@@ -121,10 +20,12 @@ addLayer("mine", {
     color: "yellow",
     type: "none",
     hotkeys: [
-        {key: "w", description: "W", onPress(){playerMove('w')}},
-        {key: "a", description: "A", onPress(){playerMove('a')}},
-        {key: "s", description: "S", onPress(){playerMove('s')}},
-        {key: "d", description: "D", onPress(){playerMove('d')}},
+        {key: "w", description: "W", onPress(){timePast('w')}},
+        {key: "a", description: "A", onPress(){timePast('a')}},
+        {key: "s", description: "S", onPress(){timePast('s')}},
+        {key: "d", description: "D", onPress(){timePast('d')}},
+        {key: "r", description: "R", onPress(){inputLevel(player.mine.lastWorld, player.mine.lastLevel)}},
+        {key: "z", description: "Z", onPress(){undo()}},
     ],
     grid: {
         rows: 15,
@@ -209,7 +110,7 @@ addLayer("mine", {
         w: {
             display(){return 'W'},
             canClick(){return true},
-            onClick(){playerMove('w')},
+            onClick(){timePast('w')},
             style(){
                 return {'width': '75px', 'height': '75px', 'background': '#fff'}
             },
@@ -217,7 +118,7 @@ addLayer("mine", {
         a: {
             display(){return 'A'},
             canClick(){return true},
-            onClick(){playerMove('a')},
+            onClick(){timePast('a')},
             style(){
                 return {'width': '75px', 'height': '75px', 'background': '#fff'}
             },
@@ -225,7 +126,7 @@ addLayer("mine", {
         s: {
             display(){return 'S'},
             canClick(){return true},
-            onClick(){playerMove('s')},
+            onClick(){timePast('s')},
             style(){
                 return {'width': '75px', 'height': '75px', 'background': '#fff'}
             },
@@ -233,7 +134,7 @@ addLayer("mine", {
         d: {
             display(){return 'D'},
             canClick(){return true},
-            onClick(){playerMove('d')},
+            onClick(){timePast('d')},
             style(){
                 return {'width': '75px', 'height': '75px', 'background': '#fff'}
             },

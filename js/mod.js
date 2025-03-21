@@ -4,7 +4,7 @@ let modInfo = {
 	id: "mymod2",
 	author: "辉影神秘",
 	pointsName: "points",
-	modFiles: ["layers.js", "tree.js", 'logic/player.js', 'level/world0.js'],
+	modFiles: ["layers.js", "tree.js", 'logic/level.js', 'logic/player.js', 'level/world0.js'],
 
 	internationalizationMod: false,
 	// When enabled, it will ask the player to choose a language at the beginning of the game
