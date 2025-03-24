@@ -11,6 +11,9 @@ addLayer("mine", {
         lastWorld: 'world0',
         lastLevel: 'level0',
 
+        levelRows: n(18),
+        levelCols: n(33),
+
         console: false,
         type: 'wall',
         choose: 'blank',
@@ -28,8 +31,18 @@ addLayer("mine", {
         {key: "z", description: "Z", onPress(){undo()}},
     ],
     grid: {
-        rows: 15,
-        cols: 15,
+        rows: 18,
+        cols: 33,
+        getUnlocked(id){
+            let a = Number(id) % 10
+            let b = Math.floor(Number(id) / 10) % 10
+            let c = Math.floor(Number(id) / 100) % 10
+            let d = Math.floor(Number(id) / 1000) % 10
+            if(player.mine.levelRows.gte(n(c).add(n(d).mul(10))) && player.mine.levelCols.gte(n(a).add(n(b).mul(10)))){
+                return true
+            }
+            return false
+        },
         getStartData(id){
             return {wall: 'none', item: 'none', data: 'none', meta: 'none'}
         },
@@ -60,32 +73,44 @@ addLayer("mine", {
                 if(getRightClue(id)=='more'){
                     return '<span style="color: red">'+format(data['data'], 0)+'</span>'
                 }else if(getRightClue(id)){
-                    return '<span style="color: yellow">'+format(data['data'], 0)+'</span>'
+                    return '<span style="color: green">'+format(data['data'], 0)+'</span>'
                 }
                 if(data['wall']=='blank'){
-                    return '<span style="color: white">'+format(data['data'], 0)+'</span>'
+                    return '<span style="color: dark">'+format(data['data'], 0)+'</span>'
                 }
                 return format(data['data'], 0)
             }
             if(data['item']=='mine'){
                 if(data['wall']=='blank'){
-                    return '<span style="color: yellow">F</span>'
+                    return '<span style="color: green">F</span>'
                 }
                 return 'F'
+            }
+            let a = Number(id) % 10
+            let b = Math.floor(Number(id) / 10) % 10
+            let c = Math.floor(Number(id) / 100) % 10
+            let d = Math.floor(Number(id) / 1000) % 10
+            if(n(c).add(n(d).mul(10)).eq(1)){
+                return '<small><sup>'+(a+b*10)+'</sup><small>'
+            }
+            if(n(a).add(n(b).mul(10)).eq(1)){
+                return '<small><sup>'+(c+d*10)+'</sup><small>'
             }
             return ''
         },
         getStyle(data, id){
-            let background = '#fff'
-            let borderColor = '#fff'
+            let background = '#E5E5E5'
+            let borderColor = '#E5E5E5'
             if(data['wall']=='blank'){
-                background = '#fff0'
-                borderColor = '#fff0'
+                background = '#fff'
+                borderColor = '#fff'
             }
             if(data['wall']=='win'){
-                borderColor = 'green'
+                borderColor = 'black'
+                background = '#fff'
                 if(getCanWin()){
-                    background = '#fff0'
+                    borderColor = '#fff'
+                    background = 'green'
                 }
             }
             return {'width': '45px', 'height': '45px', 'border-radius': '0', 'font-size': '38px', background, 'border-color': borderColor}
@@ -171,6 +196,52 @@ addLayer("mine", {
             },
             style(){
                 return {'width': '75px', 'height': '75px', 'background': 'green'}
+            },
+        },
+
+        rowAdd: {
+            display(){return '行增加'},
+            canClick(){return true},
+            unlocked(){return player.mine.console},
+            onClick(){
+                player.mine.levelRows = player.mine.levelRows.add(1).min(18)
+            },
+            style(){
+                return {'width': '75px', 'height': '75px', 'background': 'white'}
+            },
+        },
+        rowSub: {
+            display(){return '行减少'},
+            canClick(){return true},
+            unlocked(){return player.mine.console},
+            onClick(){
+                player.mine.levelRows = player.mine.levelRows.sub(1).max(1)
+            },
+            style(){
+                return {'width': '75px', 'height': '75px', 'background': 'white'}
+            },
+        },
+
+        colAdd: {
+            display(){return '列增加'},
+            canClick(){return true},
+            unlocked(){return player.mine.console},
+            onClick(){
+                player.mine.levelCols = player.mine.levelCols.add(1).min(33)
+            },
+            style(){
+                return {'width': '75px', 'height': '75px', 'background': 'white'}
+            },
+        },
+        colSub: {
+            display(){return '列减少'},
+            canClick(){return true},
+            unlocked(){return player.mine.console},
+            onClick(){
+                player.mine.levelCols = player.mine.levelCols.sub(1).max(1)
+            },
+            style(){
+                return {'width': '75px', 'height': '75px', 'background': 'white'}
             },
         },
 
@@ -272,6 +343,9 @@ addLayer("mine", {
                     ['row', [['clickable', 'a'], ['clickable', 's'], ['clickable', 'd']]],
                     'blank',
                     ['row', [['clickable', 'save'], 'blank', ['clickable', 'output'], 'blank', ['clickable', 'input']]],
+                    'blank',
+                    ['row', [['clickable', 'rowAdd'], ['clickable', 'rowSub']]],
+                    ['row', [['clickable', 'colAdd'], ['clickable', 'colSub']]],
                     'blank',
                     ['row', [['clickable', 'none'], ['clickable', 'clue'], ['clickable', 'mine']]],
                     ['row', [['clickable', 'arrow'], ['clickable', 'win']]],

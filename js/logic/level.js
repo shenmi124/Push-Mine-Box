@@ -7,18 +7,26 @@ function resetLevel(){
     for(let i in player.mine.grid){
         player.mine.grid[i] = {wall: 'none', item: 'none', data: 'none', meta: 'none'}
     }
+    
+    player.mine.levelRows = n(18)
+    player.mine.levelCols = n(33)
 }
 
 function outputLevel(){
-    let output = {}
+    let output = {
+        data: {},
+        level: {},
+    }
     for(let i in player.mine.grid){
         for(let data in player.mine.grid[i]){
             if(player.mine.grid[i][data]!=='none'){
-                output[i] ??= {}
-                output[i][data] = player.mine.grid[i][data]
+                output['level'][i] ??= {}
+                output['level'][i][data] = player.mine.grid[i][data]
             }
         }
     }
+    output['data']['row'] = player.mine.levelRows
+    output['data']['col'] = player.mine.levelCols
     console.log(output)
     return output
 }
@@ -26,11 +34,13 @@ function outputLevel(){
 function inputLevel(world, level){
     resetLevel()
     let input = All[world][level]
-    for(let i in input){
-        for(let type in input[i]){
-            player.mine.grid[i][type] = input[i][type]
+    for(let i in input['level']){
+        for(let type in input['level'][i]){
+            player.mine.grid[i][type] = input['level'][i][type]
         }
     }
+    player.mine.levelRows = n(input['data']['row'])
+    player.mine.levelCols = n(input['data']['col'])
 
     steps = []
     stepsLocation = []

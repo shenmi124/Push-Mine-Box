@@ -32,7 +32,7 @@ var colors = {
 		color: "#dfdfdf",
 		points: "#ffffff",
 		locked: "#bf8f8f",
-		background: "grey",
+		background: "#E5E5E5",
 		background_tooltip: "rgba(0, 0, 0, 0.75)",
 	},
 }

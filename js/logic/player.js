@@ -52,6 +52,17 @@ function getCanWin(){
 
 function getCanMove(type, position, move){
     let movePosition = Number(position)+move
+    if(player.mine.grid[movePosition]['wall']=='none'){
+        return false
+    }
+    if(player.mine.grid[movePosition]['wall']=='win'){
+        if(!getCanWin()){
+            return false
+        }else if(type=='arrow'){
+            inputLevel(player.mine.grid[movePosition]['meta'][0], player.mine.grid[movePosition]['meta'][1])
+            return false
+        }
+    }
     if(player.mine.grid[movePosition]['item']=='mine'){
         if(type=='arrow'){
             player.mine.grid[movePosition]['item'] = 'arrow'
@@ -77,17 +88,6 @@ function getCanMove(type, position, move){
             playerPushBox('clue', movePosition, move)
         }
         return canMove
-    }
-    if(player.mine.grid[movePosition]['wall']=='none'){
-        return false
-    }
-    if(player.mine.grid[movePosition]['wall']=='win'){
-        if(!getCanWin()){
-            return false
-        }else if(type=='arrow'){
-            inputLevel(player.mine.grid[movePosition]['meta'][0], player.mine.grid[movePosition]['meta'][1])
-            return false
-        }
     }
     return true
 }
