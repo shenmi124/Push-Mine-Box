@@ -64,9 +64,9 @@ addLayer("mine", {
         getDisplay(data, id){
             if(data['item']=='arrow'){
                 if(data['data']){
-                    return '<span style="font-size: 32px">♿</span>'
+                    return '<span style="font-size: 30px">♿</span>'
                 }else{
-                    return '<span style="font-size: 32px">🧊</span>'
+                    return '<span style="font-size: 30px">🧊</span>'
                 }
             }
             if(data['item']=='clue'){
@@ -99,21 +99,79 @@ addLayer("mine", {
             return ''
         },
         getStyle(data, id){
+            let width = 45
+            let height = 45
+
             let background = '#E5E5E5'
-            let borderColor = '#E5E5E5'
+            let borderLeft = 'none'
+            let borderRight = 'none'
+            let borderTop = 'none'
+            let borderBottom = 'none'
+            let borderLeftColor = '#E5E5E5'
+            let borderRightColor = '#E5E5E5'
+            let borderTopColor = '#E5E5E5'
+            let borderBottomColor = '#E5E5E5'
             if(data['wall']=='blank'){
                 background = '#fff'
-                borderColor = '#fff'
             }
-            if(data['wall']=='win'){
-                borderColor = 'black'
-                background = '#fff'
-                if(getCanWin()){
-                    borderColor = '#fff'
-                    background = 'green'
+            if(data['wall']=='none'){
+                borderLeftColor = '#fff'
+                borderRightColor = '#fff'
+                borderTopColor = '#fff'
+                borderBottomColor = '#fff'
+                if(player.mine.grid[Number(id)-100]?.['wall']=='blank'){
+                    borderTop = ''
+                    borderTopColor = '#000'
+                }
+                if(player.mine.grid[Number(id)+100]?.['wall']=='blank'){
+                    borderBottom = ''
+                    borderBottomColor = '#000'
+                }
+                if(player.mine.grid[Number(id)-1]?.['wall']=='blank'){
+                    borderLeft = ''
+                    borderLeftColor = '#000'
+                }
+                if(player.mine.grid[Number(id)+1]?.['wall']=='blank'){
+                    borderRight = ''
+                    borderRightColor = '#000'
                 }
             }
-            return {'width': '45px', 'height': '45px', 'border-radius': '0', 'font-size': '38px', background, 'border-color': borderColor}
+            if(data['wall']=='win'){
+                borderTop = ''
+                borderBottom = ''
+                borderLeft = ''
+                borderRight = ''
+                borderLeftColor = '#000'
+                borderRightColor = '#000'
+                borderTopColor = '#000'
+                borderBottomColor = '#000'
+                background = 'green'
+                if(getCanWin()){
+                    borderLeftColor = '#fff'
+                    borderRightColor = '#fff'
+                    borderTopColor = '#fff'
+                    borderBottomColor = '#fff'
+                }
+            }
+
+            width = width+'px'
+            height = height+'px'
+
+            return {
+                width,
+                height,
+                'border-radius': '0',
+                'font-size': '38px',
+                background,
+                'border-left': borderLeft,
+                'border-right': borderRight,
+                'border-top': borderTop,
+                'border-bottom': borderBottom,
+                'border-left-color': borderLeftColor,
+                'border-right-color': borderRightColor,
+                'border-top-color': borderTopColor,
+                'border-bottom-color': borderBottomColor,
+            }
         },
     },
     clickables: {
@@ -335,6 +393,8 @@ addLayer("mine", {
                 name(){return '主页'},
                 nameI18N(){return 'main'},
                 content: [
+                    ["display-text", function() {return player.mine.lastWorld+'/'+player.mine.lastLevel}],
+                    'blank',
                     'grid',
                     'blank',
                     ['clickable', 'reset'],

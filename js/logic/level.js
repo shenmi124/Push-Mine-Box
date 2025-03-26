@@ -61,6 +61,7 @@ function edit(Class){
 }
 
 function undo(){
+    if(!player.mine.console){return ''}
     if(stepsTimes>=0){
         let doing = steps[stepsTimes]
         let location = stepsLocation[stepsTimes]

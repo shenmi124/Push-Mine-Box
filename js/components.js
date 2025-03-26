@@ -379,7 +379,7 @@ function loadVue() {
 		<div v-if="tmp[layer].grid" class="upgTable">
 			<div v-for="row in (data === undefined ? tmp[layer].grid.rows : data)" class="upgRow">
 				<div v-for="col in tmp[layer].grid.cols"><div v-if="run(layers[layer].grid.getUnlocked, layers[layer].grid, row*100+col)"
-					class="upgAlign" v-bind:style="{'height': 'inherit',}">
+					class="upgAlign" v-bind:style="{}">
 					<gridable :layer = "layer" :data = "row*100+col" v-bind:style="tmp[layer].componentStyles.gridable"></gridable>
 				</div></div>
 				<br>

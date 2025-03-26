@@ -455,6 +455,135 @@ let world0 = {
     },
     level5: {
         "data": {
+            "row": "10",
+            "col": "12"
+        },
+        "level": {
+            "305": {
+                "item": "mine"
+            },
+            "306": {
+                "item": "mine"
+            },
+            "307": {
+                "item": "mine"
+            },
+            "405": {
+                "wall": "blank"
+            },
+            "406": {
+                "wall": "blank"
+            },
+            "407": {
+                "wall": "blank",
+                "item": "clue",
+                "data": "3"
+            },
+            "408": {
+                "wall": "blank"
+            },
+            "409": {
+                "wall": "blank"
+            },
+            "410": {
+                "wall": "blank"
+            },
+            "503": {
+                "wall": "blank"
+            },
+            "504": {
+                "wall": "blank"
+            },
+            "505": {
+                "wall": "blank",
+                "item": "mine"
+            },
+            "506": {
+                "wall": "blank"
+            },
+            "507": {
+                "wall": "blank"
+            },
+            "508": {
+                "wall": "blank"
+            },
+            "509": {
+                "wall": "blank"
+            },
+            "510": {
+                "wall": "win"
+            },
+            "603": {
+                "wall": "blank"
+            },
+            "604": {
+                "wall": "blank",
+                "item": "clue",
+                "data": "3"
+            },
+            "605": {
+                "wall": "blank",
+                "item": "mine"
+            },
+            "606": {
+                "wall": "blank",
+                "item": "clue",
+                "data": "3"
+            },
+            "607": {
+                "wall": "blank",
+                "item": "clue",
+                "data": "1"
+            },
+            "608": {
+                "wall": "blank"
+            },
+            "609": {
+                "wall": "blank"
+            },
+            "610": {
+                "wall": "blank"
+            },
+            "703": {
+                "wall": "blank"
+            },
+            "704": {
+                "wall": "blank"
+            },
+            "705": {
+                "wall": "blank",
+                "item": "clue",
+                "data": "2"
+            },
+            "706": {
+                "wall": "blank"
+            },
+            "707": {
+                "wall": "blank"
+            },
+            "708": {
+                "item": "mine"
+            },
+            "803": {
+                "wall": "blank",
+                "item": "arrow"
+            },
+            "804": {
+                "wall": "blank"
+            },
+            "805": {
+                "wall": "blank"
+            },
+            "806": {
+                "wall": "blank"
+            },
+            "807": {
+                "item": "mine"
+            }
+        }
+    },
+    level6: {
+        "data": {
             "row": "15",
             "col": "15"
         },
@@ -464,12 +593,6 @@ let world0 = {
                 "item": "arrow"
             },
         }
-    },
-    level6: {
-        "805": {
-            "wall": "blank",
-            "item": "arrow"
-        },
     },
     level9: {
         "503": {
