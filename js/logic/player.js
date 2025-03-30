@@ -52,6 +52,7 @@ function getCanWin(){
 
 function getCanMove(type, position, move){
     let movePosition = Number(position)+move
+
     if(player.mine.grid[movePosition]['wall']=='none'){
         return false
     }
@@ -59,22 +60,14 @@ function getCanMove(type, position, move){
         if(!getCanWin()){
             return false
         }else if(type=='arrow'){
-            inputLevel(player.mine.grid[movePosition]['meta'][0], player.mine.grid[movePosition]['meta'][1])
-            return false
+            return true
         }
     }
-    if(player.mine.grid[movePosition]['item']=='mine'){
-        if(type=='arrow'){
-            player.mine.grid[movePosition]['item'] = 'arrow'
-            player.mine.grid[movePosition]['data'] = false
-            player.mine.grid[position]['item'] = 'none'
-            player.mine.grid[position]['data'] = 'none'
-            return false
-        }
 
-        let canMove = getCanMove('mine', movePosition, move)
+    if(player.mine.grid[movePosition]['item']=='box'){
+        let canMove = getCanMove('box', movePosition, move)
         if(canMove){
-            playerPushBox('mine', movePosition, move)
+            playerPushBox('box', movePosition, move)
         }
         return canMove
     }
@@ -89,6 +82,19 @@ function getCanMove(type, position, move){
         }
         return canMove
     }
+    if(player.mine.grid[movePosition]['item']=='mine'){
+        if(type=='arrow'){
+            playerDie('mine', movePosition, move)
+            return false
+        }
+
+        let canMove = getCanMove('mine', movePosition, move)
+        if(canMove){
+            playerPushBox('mine', movePosition, move)
+        }
+        return canMove
+    }
+
     return true
 }
 
@@ -107,10 +113,26 @@ function playerPushBox(type, boxPosition, move){
     player.mine.grid[boxPosition]['item'] = 'none'
     player.mine.grid[boxPosition]['data'] = 'none'
 
-    if(type=='clue'){
+    if(type=='box'){
+        stepsAdded += 'b'
+    }else if(type=='clue'){
         stepsAdded += 'c'
     }else if(type=='mine'){
         stepsAdded += 'm'
+    }
+}
+
+function playerDie(type, position, move){
+    player.mine.grid[position]['item'] = 'arrow'
+    player.mine.grid[position]['data'] = false
+    player.mine.grid[Number(position)-move]['item'] = 'none'
+    player.mine.grid[Number(position)-move]['data'] = 'none'
+    
+    if(type=='mine'){
+        stepsLocation.push(position)
+        stepsAdded += 'D'
+        steps.push(stepsAdded)
+        stepsTimes += 1
     }
 }
 
@@ -123,6 +145,10 @@ function timePast(direction){
     if(direction=='a'){move = -1}
     if(direction=='s'){move = 100}
     if(direction=='d'){move = 1}
+
+    if(PlayerPosition.length==0){
+        stepsAdded = ''
+    }
 
     for(let i in PlayerPosition){
         let canMove = getCanMove('arrow', PlayerPosition[i], move)
@@ -139,6 +165,9 @@ function timePast(direction){
         stepsTimes += 1
         stepsAdded = ''
     }
+
+    console.log(steps)
+    console.log(stepsTimes)
 
     for(let i in WinPosition){
         player.mine.grid[WinPosition[i]]['wall'] = 'blank'

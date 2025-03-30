@@ -3,9 +3,25 @@ let stepsLocation = []
 let stepsTimes = -1
 let stepsAdded = ''
 
+function startData(){
+    return {
+        wall: 'none',
+        item: 'none',
+        data: 'none',
+        meta: 'none',
+        info: 'none',
+    }
+}
+
+function edit(Class){
+    for(let i in startData()){
+        player.mine[i] = Class[i] ?? 'none'
+    }
+}
+
 function resetLevel(){
     for(let i in player.mine.grid){
-        player.mine.grid[i] = {wall: 'none', item: 'none', data: 'none', meta: 'none'}
+        player.mine.grid[i] = startData()
     }
     
     player.mine.levelRows = n(18)
@@ -31,6 +47,14 @@ function outputLevel(){
     return output
 }
 
+function enterLevel(){
+    for(let i in PlayerPosition){
+        if(player.mine.grid[PlayerPosition[i]]['wall']=='win'){
+            inputLevel(player.mine.grid[PlayerPosition[i]]['meta'][0], player.mine.grid[PlayerPosition[i]]['meta'][1])
+        }
+    }
+}
+
 function inputLevel(world, level){
     resetLevel()
     let input = All[world][level]
@@ -53,15 +77,7 @@ function inputLevel(world, level){
     getPosition()
 }
 
-function edit(Class){
-    player.mine.type = Class.type ?? 'none'
-    player.mine.choose = Class.choose ?? 'none'
-    player.mine.data = Class.data ?? 'none'
-    player.mine.meta = Class.meta ?? 'none'
-}
-
 function undo(){
-    if(!player.mine.console){return ''}
     if(stepsTimes>=0){
         let doing = steps[stepsTimes]
         let location = stepsLocation[stepsTimes]
@@ -74,6 +90,12 @@ function undo(){
 
         for(let str = 0; str <= doing.length; str++){
             let data = doing[str]
+            if(data=='b'){
+                setTimeout(function(){
+                    playerPushBox('box', location-(move*str), move)
+                },0)
+                continue
+            }
             if(data=='c'){
                 setTimeout(function(){
                     playerPushBox('clue', location-(move*str), move)
@@ -83,6 +105,12 @@ function undo(){
             if(data=='m'){
                 setTimeout(function(){
                     playerPushBox('mine', location-(move*str), move)
+                },0)
+                continue
+            }
+            if(data=='D'){
+                setTimeout(function(){
+                    player.mine.grid[location]['item'] = 'mine'
                 },0)
                 continue
             }

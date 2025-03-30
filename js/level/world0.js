@@ -511,7 +511,11 @@ let world0 = {
                 "wall": "blank"
             },
             "510": {
-                "wall": "win"
+                "wall": "win",
+                "meta": [
+                    "world0",
+                    "level6"
+                ]
             },
             "603": {
                 "wall": "blank"
@@ -542,7 +546,9 @@ let world0 = {
                 "wall": "blank"
             },
             "610": {
-                "wall": "blank"
+                "wall": "blank",
+                "item": "box",
+                "data": "1"
             },
             "703": {
                 "wall": "blank"
@@ -564,6 +570,10 @@ let world0 = {
             "708": {
                 "item": "mine"
             },
+            "710": {
+                "wall": "blank",
+                "data": "1"
+            },
             "803": {
                 "wall": "blank",
                 "item": "arrow"
@@ -579,6 +589,9 @@ let world0 = {
             },
             "807": {
                 "item": "mine"
+            },
+            "907": {
+                "data": "1"
             }
         }
     },

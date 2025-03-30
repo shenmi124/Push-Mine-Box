@@ -138,11 +138,12 @@
 	border-color: rgba(0, 0, 0, 0.125);
 	font-size: 10px;
 	overflow: visible;
-	transition: 0.4s;
 }
 
 .tile.can:hover {
-	transform: scale(1.1, 1.1);
+	transform: scale(1, 1);
+	box-shadow: inset 0 0 5px 0 black;
+	transition: 0.4s;
 	z-index: 7;
 }
 

@@ -1,3 +1,9 @@
+window.onkeydown = function(e) {
+    if (e.keyCode === 32 && e.target === document.body) {
+        e.preventDefault();
+    }
+}
+
 addLayer("mine", {
     name: "扫雷",
     symbol: "扫雷",
@@ -19,10 +25,21 @@ addLayer("mine", {
         choose: 'blank',
         data: 'none',
         meta: 'none',
+        info: 'none',
     }},
     color: "yellow",
     type: "none",
+    update(diff){
+        let width = (window.innerWidth * 0.8) - 150
+        let height = (window.innerHeight * 0.8) - 75
+        width = width / Number(player.mine.levelCols)
+        height = height / Number(player.mine.levelRows)
+        let gird = Math.min(width, height)
+        document.body.style.setProperty('--girdWidth', gird+'px')
+        document.body.style.setProperty('--fontSize', gird-7+'px')
+    },
     hotkeys: [
+        {key: " ", description: "SPACE", onPress(){enterLevel()}},
         {key: "w", description: "W", onPress(){timePast('w')}},
         {key: "a", description: "A", onPress(){timePast('a')}},
         {key: "s", description: "S", onPress(){timePast('s')}},
@@ -44,7 +61,7 @@ addLayer("mine", {
             return false
         },
         getStartData(id){
-            return {wall: 'none', item: 'none', data: 'none', meta: 'none'}
+            return startData()
         },
         getCanClick(){
             return true
@@ -58,16 +75,22 @@ addLayer("mine", {
                     if(player.mine.data!=='none'){
                         player.mine.grid[id]['data'] = player.mine.data
                     }
+                    if(player.mine.meta!=='none'){
+                        player.mine.grid[id]['meta'] = player.mine.meta
+                    }
                 }
             }
         },
         getDisplay(data, id){
             if(data['item']=='arrow'){
                 if(data['data']){
-                    return '<span style="font-size: 30px">♿</span>'
+                    return '<img src="png/player.png" style="image-rendering: pixelated; width: var(--fontSize)"></img>'
                 }else{
                     return '<span style="font-size: 30px">🧊</span>'
                 }
+            }
+            if(data['item']=='box'){
+                return '<span style="font-size: 30px">📦</span>'
             }
             if(data['item']=='clue'){
                 if(getRightClue(id)=='more'){
@@ -82,7 +105,7 @@ addLayer("mine", {
             }
             if(data['item']=='mine'){
                 if(data['wall']=='blank'){
-                    return '<span style="color: green">F</span>'
+                    return '<span style="color: black">F</span>'
                 }
                 return 'F'
             }
@@ -91,17 +114,14 @@ addLayer("mine", {
             let c = Math.floor(Number(id) / 100) % 10
             let d = Math.floor(Number(id) / 1000) % 10
             if(n(c).add(n(d).mul(10)).eq(1)){
-                return '<small><sup>'+(a+b*10)+'</sup><small>'
+                return '<span style="font-size: 30px">'+(a+b*10)+'<span>'
             }
             if(n(a).add(n(b).mul(10)).eq(1)){
-                return '<small><sup>'+(c+d*10)+'</sup><small>'
+                return '<span style="font-size: 30px">'+(c+d*10)+'<span>'
             }
             return ''
         },
         getStyle(data, id){
-            let width = 45
-            let height = 45
-
             let background = '#E5E5E5'
             let borderLeft = 'none'
             let borderRight = 'none'
@@ -145,7 +165,7 @@ addLayer("mine", {
                 borderRightColor = '#000'
                 borderTopColor = '#000'
                 borderBottomColor = '#000'
-                background = 'green'
+                background = 'yellow'
                 if(getCanWin()){
                     borderLeftColor = '#fff'
                     borderRightColor = '#fff'
@@ -154,14 +174,11 @@ addLayer("mine", {
                 }
             }
 
-            width = width+'px'
-            height = height+'px'
-
             return {
-                width,
-                height,
+                width: 'var(--girdWidth)',
+                height: 'var(--girdWidth)',
+                'font-size': 'var(--fontSize)',
                 'border-radius': '0',
-                'font-size': '38px',
                 background,
                 'border-left': borderLeft,
                 'border-right': borderRight,
@@ -175,6 +192,16 @@ addLayer("mine", {
         },
     },
     clickables: {
+        interaction: {
+            display(){return '交互'},
+            canClick(){return true},
+            onClick(){
+                enterLevel()
+            },
+            style(){
+                return {'width': '75px', 'height': '75px', 'background': '#fff'}
+            },
+        },
         reset: {
             display(){return '重置'},
             canClick(){return true},
@@ -184,6 +211,16 @@ addLayer("mine", {
                 }else{
                     resetLevel()
                 }
+            },
+            style(){
+                return {'width': '75px', 'height': '75px', 'background': '#fff'}
+            },
+        },
+        undo: {
+            display(){return '撤销'},
+            canClick(){return true},
+            onClick(){
+                undo()
             },
             style(){
                 return {'width': '75px', 'height': '75px', 'background': '#fff'}
@@ -352,6 +389,22 @@ addLayer("mine", {
                 return {'width': '75px', 'height': '75px', 'background': 'white'}
             },
         },
+        box: {
+            display(){
+                return '箱子'
+            },
+            canClick(){return true},
+            unlocked(){return player.mine.console},
+            onClick(){
+                edit({
+                    type: 'item',
+                    choose: 'box',
+                })
+            },
+            style(){
+                return {'width': '75px', 'height': '75px', 'background': 'pink'}
+            },
+        },
         clue: {
             display(){
                 if(player.mine.choose=='clue'){
@@ -397,17 +450,19 @@ addLayer("mine", {
                     'blank',
                     'grid',
                     'blank',
-                    ['clickable', 'reset'],
+                    ['row', [['clickable', 'undo'],['clickable', 'interaction']]],
                     'blank',
                     ['row', [['clickable', 'w']]],
                     ['row', [['clickable', 'a'], ['clickable', 's'], ['clickable', 'd']]],
+                    'blank',
+                    ['clickable', 'reset'],
                     'blank',
                     ['row', [['clickable', 'save'], 'blank', ['clickable', 'output'], 'blank', ['clickable', 'input']]],
                     'blank',
                     ['row', [['clickable', 'rowAdd'], ['clickable', 'rowSub']]],
                     ['row', [['clickable', 'colAdd'], ['clickable', 'colSub']]],
                     'blank',
-                    ['row', [['clickable', 'none'], ['clickable', 'clue'], ['clickable', 'mine']]],
+                    ['row', [['clickable', 'none'], ['clickable', 'clue'], ['clickable', 'box'], ['clickable', 'mine']]],
                     ['row', [['clickable', 'arrow'], ['clickable', 'win']]],
                     'blank',
                     'blank',
