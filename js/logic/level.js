@@ -14,9 +14,11 @@ function startData(){
 }
 
 function edit(Class){
-    for(let i in startData()){
-        player.mine[i] = Class[i] ?? 'none'
-    }
+    player.mine.type = Class.type ?? 'none'
+    player.mine.choose = Class.choose ?? 'none'
+    player.mine.data = Class.data ?? 'none'
+    player.mine.meta = Class.meta ?? 'none'
+    player.mine.info = Class.info ?? 'none'
 }
 
 function resetLevel(){
@@ -26,6 +28,18 @@ function resetLevel(){
     
     player.mine.levelRows = n(18)
     player.mine.levelCols = n(33)
+}
+
+function exportData(data){
+	let str = data
+
+	const el = document.createElement("textarea");
+	el.value = str;
+	document.body.appendChild(el);
+	el.select();
+	el.setSelectionRange(0, 99999);
+	document.execCommand("copy");
+	document.body.removeChild(el);
 }
 
 function outputLevel(){
@@ -43,7 +57,8 @@ function outputLevel(){
     }
     output['data']['row'] = player.mine.levelRows
     output['data']['col'] = player.mine.levelCols
-    console.log(output)
+    console.log(player.mine.lastLevel+': '+JSON.stringify(output)+',')
+    exportData(player.mine.lastLevel+': '+JSON.stringify(output)+',')
     return output
 }
 

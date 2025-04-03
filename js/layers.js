@@ -78,48 +78,59 @@ addLayer("mine", {
                     if(player.mine.meta!=='none'){
                         player.mine.grid[id]['meta'] = player.mine.meta
                     }
+                    if(player.mine.info!=='none'){
+                        player.mine.grid[id]['info'] = player.mine.info
+                    }
                 }
             }
         },
         getDisplay(data, id){
+            let text = ''
+
             if(data['item']=='arrow'){
                 if(data['data']){
-                    return '<img src="png/player.png" style="image-rendering: pixelated; width: var(--fontSize)"></img>'
+                    text = '<img src="png/player.png" style="image-rendering: pixelated; width: var(--fontSize)"></img>'
                 }else{
-                    return '<span style="font-size: 30px">🧊</span>'
+                    text = '<span style="font-size: 30px">🧊</span>'
                 }
             }
             if(data['item']=='box'){
-                return '<span style="font-size: 30px">📦</span>'
+                text = '<span style="font-size: 30px">📦</span>'
             }
             if(data['item']=='clue'){
-                if(getRightClue(id)=='more'){
-                    return '<span style="color: red">'+format(data['data'], 0)+'</span>'
-                }else if(getRightClue(id)){
-                    return '<span style="color: green">'+format(data['data'], 0)+'</span>'
-                }
+                text = format(data['data'], 0)
                 if(data['wall']=='blank'){
-                    return '<span style="color: dark">'+format(data['data'], 0)+'</span>'
+                    text = '<span style="color: dark">'+format(data['data'], 0)+'</span>'
                 }
-                return format(data['data'], 0)
+                if(getRightClue(id)=='more'){
+                    text = '<span style="color: red">'+format(data['data'], 0)+'</span>'
+                }else if(getRightClue(id)){
+                    text = '<span style="color: green">'+format(data['data'], 0)+'</span>'
+                }
             }
             if(data['item']=='mine'){
                 if(data['wall']=='blank'){
-                    return '<span style="color: black">F</span>'
+                    text = '<span style="color: black">F</span>'
                 }
-                return 'F'
+                text = 'F'
             }
+
             let a = Number(id) % 10
             let b = Math.floor(Number(id) / 10) % 10
             let c = Math.floor(Number(id) / 100) % 10
             let d = Math.floor(Number(id) / 1000) % 10
             if(n(c).add(n(d).mul(10)).eq(1)){
-                return '<span style="font-size: 30px">'+(a+b*10)+'<span>'
+                text = '<span style="font-size: 30px">'+(a+b*10)+'<span>'
             }
             if(n(a).add(n(b).mul(10)).eq(1)){
-                return '<span style="font-size: 30px">'+(c+d*10)+'<span>'
+                text = '<span style="font-size: 30px">'+(c+d*10)+'<span>'
             }
-            return ''
+
+            if(data['info']!=='none'){
+                text += '<span style="position: absolute; font-size: 20px; top: 0px; left: 5px">'+data['info']+'</span>'
+            }
+
+            return '<span style="display: flex; justify-content: space-around">'+text+'</span>'
         },
         getStyle(data, id){
             let background = '#E5E5E5'
@@ -294,6 +305,28 @@ addLayer("mine", {
             },
         },
 
+        rowMoveAdd: {
+            display(){return '左平移'},
+            canClick(){return true},
+            unlocked(){return player.mine.console},
+            onClick(){
+                for(let ic = 1; ic<=Number(player.mine.levelCols); ic++){
+                    for(let ir = 1; ir<=Number(player.mine.levelRows); ir++){
+                        let data = ir*100+ic
+                        if(ic>=2){
+                            console.log(data-1)
+                            player.mine.grid[data-1] = player.mine.grid[data]
+                        }
+                        if(ic==Number(player.mine.levelCols)){
+                            player.mine.grid[data] = startData()
+                        }
+                    }
+                }
+            },
+            style(){
+                return {'width': '75px', 'height': '75px', 'background': 'white'}
+            },
+        },
         rowAdd: {
             display(){return '行增加'},
             canClick(){return true},
@@ -311,6 +344,25 @@ addLayer("mine", {
             unlocked(){return player.mine.console},
             onClick(){
                 player.mine.levelRows = player.mine.levelRows.sub(1).max(1)
+            },
+            style(){
+                return {'width': '75px', 'height': '75px', 'background': 'white'}
+            },
+        },
+        rowMoveSub: {
+            display(){return '右平移'},
+            canClick(){return true},
+            unlocked(){return player.mine.console},
+            onClick(){
+                for(let ic = 1; ic<=Number(player.mine.levelCols)-1; ic++){
+                    for(let ir = 1; ir<=Number(player.mine.levelRows); ir++){
+                        let data = ir*100+Number(player.mine.levelCols)-ic
+                        player.mine.grid[data+1] = player.mine.grid[data]
+                        if(ic==Number(player.mine.levelCols)-1){
+                            player.mine.grid[data] = startData()
+                        }
+                    }
+                }
             },
             style(){
                 return {'width': '75px', 'height': '75px', 'background': 'white'}
@@ -383,6 +435,7 @@ addLayer("mine", {
                     type: 'wall',
                     choose: 'win',
                     meta: [prompt('输入世界名'), prompt('输入关卡名')],
+                    info: prompt('输入信息'),
                 })
             },
             style(){
@@ -459,7 +512,7 @@ addLayer("mine", {
                     'blank',
                     ['row', [['clickable', 'save'], 'blank', ['clickable', 'output'], 'blank', ['clickable', 'input']]],
                     'blank',
-                    ['row', [['clickable', 'rowAdd'], ['clickable', 'rowSub']]],
+                    ['row', [['clickable', 'rowMoveAdd'], ['clickable', 'rowAdd'], ['clickable', 'rowSub'], ['clickable', 'rowMoveSub']]],
                     ['row', [['clickable', 'colAdd'], ['clickable', 'colSub']]],
                     'blank',
                     ['row', [['clickable', 'none'], ['clickable', 'clue'], ['clickable', 'box'], ['clickable', 'mine']]],

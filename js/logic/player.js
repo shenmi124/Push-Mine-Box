@@ -53,17 +53,6 @@ function getCanWin(){
 function getCanMove(type, position, move){
     let movePosition = Number(position)+move
 
-    if(player.mine.grid[movePosition]['wall']=='none'){
-        return false
-    }
-    if(player.mine.grid[movePosition]['wall']=='win'){
-        if(!getCanWin()){
-            return false
-        }else if(type=='arrow'){
-            return true
-        }
-    }
-
     if(player.mine.grid[movePosition]['item']=='box'){
         let canMove = getCanMove('box', movePosition, move)
         if(canMove){
@@ -93,6 +82,17 @@ function getCanMove(type, position, move){
             playerPushBox('mine', movePosition, move)
         }
         return canMove
+    }
+
+    if(player.mine.grid[movePosition]['wall']=='none'){
+        return false
+    }
+    if(player.mine.grid[movePosition]['wall']=='win'){
+        if(!getCanWin()){
+            return false
+        }else if(type=='arrow'){
+            return true
+        }
     }
 
     return true
@@ -165,9 +165,6 @@ function timePast(direction){
         stepsTimes += 1
         stepsAdded = ''
     }
-
-    console.log(steps)
-    console.log(stepsTimes)
 
     for(let i in WinPosition){
         player.mine.grid[WinPosition[i]]['wall'] = 'blank'
