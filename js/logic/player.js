@@ -40,6 +40,14 @@ function getRightClue(id){
     return canWin
 }
 
+function getComplete(id){
+    let level = id[0]+'/'+id[1]
+    if(player.mine.completeLevel.indexOf(level)!==-1){
+        return true
+    }
+    return false
+}
+
 function getCanWin(){
     let canWin = true
     for(let i in CluePosition){
@@ -72,7 +80,7 @@ function getCanMove(type, position, move){
         return canMove
     }
     if(player.mine.grid[movePosition]['item']=='mine'){
-        if(type=='arrow'){
+        if(type=='arrow' && player.mine.grid[movePosition]['wall']!=='none'){
             playerDie('mine', movePosition, move)
             return false
         }
@@ -152,7 +160,7 @@ function timePast(direction){
 
     for(let i in PlayerPosition){
         let canMove = getCanMove('arrow', PlayerPosition[i], move)
-        if(canMove){
+        if(canMove && !(!getComplete(player.mine.grid[PlayerPosition[i]]['meta']) && player.mine.grid[PlayerPosition[i]]['wall']=='enter' && player.mine.grid[PlayerPosition[i]]['item']=='arrow')){
             stepsLocation.push(Number(PlayerPosition[i])+move)
             playerMove('arrow', PlayerPosition[i], move)
         }else{

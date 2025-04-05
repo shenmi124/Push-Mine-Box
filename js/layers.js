@@ -14,8 +14,12 @@ addLayer("mine", {
         unlocked: true,
 		points: new Decimal(0),
 
+        initialization: false,
+
+        completeLevel: [],
+
         lastWorld: 'world0',
-        lastLevel: 'level0',
+        lastLevel: 'world',
 
         levelRows: n(18),
         levelCols: n(33),
@@ -30,6 +34,11 @@ addLayer("mine", {
     color: "yellow",
     type: "none",
     update(diff){
+        if(player.tab!=='mine' && !player.mine.console){
+            showTab('mine')
+            inputLevel(player.mine.lastWorld, player.mine.lastLevel)
+        }
+
         let width = (window.innerWidth * 0.8) - 150
         let height = (window.innerHeight * 0.8) - 75
         width = width / Number(player.mine.levelCols)
@@ -70,6 +79,9 @@ addLayer("mine", {
             if(player.mine.console){
                 if(player.mine.grid[id][player.mine.type]==player.mine.choose){
                     player.mine.grid[id][player.mine.type] = 'none'
+                    player.mine.grid[id]['data'] = 'none'
+                    player.mine.grid[id]['meta'] = 'none'
+                    player.mine.grid[id]['info'] = 'none'
                 }else{
                     player.mine.grid[id][player.mine.type] = player.mine.choose
                     if(player.mine.data!=='none'){
@@ -133,6 +145,7 @@ addLayer("mine", {
             return '<span style="display: flex; justify-content: space-around">'+text+'</span>'
         },
         getStyle(data, id){
+            let color = '#000'
             let background = '#E5E5E5'
             let borderLeft = 'none'
             let borderRight = 'none'
@@ -150,21 +163,25 @@ addLayer("mine", {
                 borderRightColor = '#fff'
                 borderTopColor = '#fff'
                 borderBottomColor = '#fff'
-                if(player.mine.grid[Number(id)-100]?.['wall']=='blank'){
-                    borderTop = ''
-                    borderTopColor = '#000'
-                }
-                if(player.mine.grid[Number(id)+100]?.['wall']=='blank'){
-                    borderBottom = ''
-                    borderBottomColor = '#000'
-                }
-                if(player.mine.grid[Number(id)-1]?.['wall']=='blank'){
-                    borderLeft = ''
-                    borderLeftColor = '#000'
-                }
-                if(player.mine.grid[Number(id)+1]?.['wall']=='blank'){
-                    borderRight = ''
-                    borderRightColor = '#000'
+
+                let type = ['blank', 'win', 'enter']
+                for(let i in type){
+                    if(player.mine.grid[Number(id)-100]?.['wall']==type[i]){
+                        borderTop = ''
+                        borderTopColor = '#000'
+                    }
+                    if(player.mine.grid[Number(id)+100]?.['wall']==type[i]){
+                        borderBottom = ''
+                        borderBottomColor = '#000'
+                    }
+                    if(player.mine.grid[Number(id)-1]?.['wall']==type[i]){
+                        borderLeft = ''
+                        borderLeftColor = '#000'
+                    }
+                    if(player.mine.grid[Number(id)+1]?.['wall']==type[i]){
+                        borderRight = ''
+                        borderRightColor = '#000'
+                    }
                 }
             }
             if(data['wall']=='win'){
@@ -184,8 +201,32 @@ addLayer("mine", {
                     borderBottomColor = '#fff'
                 }
             }
+            if(data['wall']=='enter'){
+                borderTop = ''
+                borderBottom = ''
+                borderLeft = ''
+                borderRight = ''
+                borderLeftColor = '#fff'
+                borderRightColor = '#fff'
+                borderTopColor = '#fff'
+                borderBottomColor = '#fff'
+                background = 'lightgreen'
+                if(getComplete(data['meta'])){
+                    color = 'green'
+                    borderLeftColor = 'green'
+                    borderRightColor = 'green'
+                    borderTopColor = 'green'
+                    borderBottomColor = 'green'
+                }else if(data['item']=='arrow'){
+                    borderLeftColor = '#000'
+                    borderRightColor = '#000'
+                    borderTopColor = '#000'
+                    borderBottomColor = '#000'
+                }
+            }
 
             return {
+                color,
                 width: 'var(--girdWidth)',
                 height: 'var(--girdWidth)',
                 'font-size': 'var(--fontSize)',
@@ -199,6 +240,10 @@ addLayer("mine", {
                 'border-right-color': borderRightColor,
                 'border-top-color': borderTopColor,
                 'border-bottom-color': borderBottomColor,
+                /*'border-left-width': '1px',
+                'border-right-width': '1px',
+                'border-top-width': '1px',
+                'border-bottom-width': '1px',*/
             }
         },
     },
@@ -314,7 +359,6 @@ addLayer("mine", {
                     for(let ir = 1; ir<=Number(player.mine.levelRows); ir++){
                         let data = ir*100+ic
                         if(ic>=2){
-                            console.log(data-1)
                             player.mine.grid[data-1] = player.mine.grid[data]
                         }
                         if(ic==Number(player.mine.levelCols)){
@@ -369,6 +413,27 @@ addLayer("mine", {
             },
         },
 
+        colMoveAdd: {
+            display(){return '上平移'},
+            canClick(){return true},
+            unlocked(){return player.mine.console},
+            onClick(){
+                for(let ir = 1; ir<=Number(player.mine.levelRows); ir++){
+                    for(let ic = 1; ic<=Number(player.mine.levelCols); ic++){
+                        let data = ir*100+ic
+                        if(ir>=2){
+                            player.mine.grid[data-100] = player.mine.grid[data]
+                        }
+                        if(ir==Number(player.mine.levelRows)){
+                            player.mine.grid[data] = startData()
+                        }
+                    }
+                }
+            },
+            style(){
+                return {'width': '75px', 'height': '75px', 'background': 'white'}
+            },
+        },
         colAdd: {
             display(){return '列增加'},
             canClick(){return true},
@@ -386,6 +451,25 @@ addLayer("mine", {
             unlocked(){return player.mine.console},
             onClick(){
                 player.mine.levelCols = player.mine.levelCols.sub(1).max(1)
+            },
+            style(){
+                return {'width': '75px', 'height': '75px', 'background': 'white'}
+            },
+        },
+        colMoveSub: {
+            display(){return '下平移'},
+            canClick(){return true},
+            unlocked(){return player.mine.console},
+            onClick(){
+                for(let ir = 1; ir<=Number(player.mine.levelRows)-1; ir++){
+                    for(let ic = 1; ic<=Number(player.mine.levelCols); ic++){
+                        let data = ic+Number(player.mine.levelRows)*100-ir*100
+                        player.mine.grid[data+100] = player.mine.grid[data]
+                        if(ir==Number(player.mine.levelRows)-1){
+                            player.mine.grid[data] = startData()
+                        }
+                    }
+                }
             },
             style(){
                 return {'width': '75px', 'height': '75px', 'background': 'white'}
@@ -434,6 +518,27 @@ addLayer("mine", {
                 edit({
                     type: 'wall',
                     choose: 'win',
+                    meta: [prompt('输入世界名'), prompt('输入关卡名')],
+                    info: prompt('输入信息'),
+                })
+            },
+            style(){
+                return {'width': '75px', 'height': '75px', 'background': 'white'}
+            },
+        },
+        enter: {
+            display(){
+                if(player.mine.choose=='enter'){
+                    return '进入<br>'+player.mine.meta
+                }
+                return '进入'
+            },
+            canClick(){return true},
+            unlocked(){return player.mine.console},
+            onClick(){
+                edit({
+                    type: 'wall',
+                    choose: 'enter',
                     meta: [prompt('输入世界名'), prompt('输入关卡名')],
                     info: prompt('输入信息'),
                 })
@@ -512,11 +617,11 @@ addLayer("mine", {
                     'blank',
                     ['row', [['clickable', 'save'], 'blank', ['clickable', 'output'], 'blank', ['clickable', 'input']]],
                     'blank',
-                    ['row', [['clickable', 'rowMoveAdd'], ['clickable', 'rowAdd'], ['clickable', 'rowSub'], ['clickable', 'rowMoveSub']]],
-                    ['row', [['clickable', 'colAdd'], ['clickable', 'colSub']]],
+                    ['row', [['clickable', 'rowMoveAdd'], ['clickable', 'colAdd'], ['clickable', 'colSub'], ['clickable', 'rowMoveSub']]],
+                    ['row', [['clickable', 'colMoveAdd'], ['clickable', 'rowAdd'], ['clickable', 'rowSub'], ['clickable', 'colMoveSub']]],
                     'blank',
                     ['row', [['clickable', 'none'], ['clickable', 'clue'], ['clickable', 'box'], ['clickable', 'mine']]],
-                    ['row', [['clickable', 'arrow'], ['clickable', 'win']]],
+                    ['row', [['clickable', 'arrow'], ['clickable', 'win'], ['clickable', 'enter']]],
                     'blank',
                     'blank',
                 ],

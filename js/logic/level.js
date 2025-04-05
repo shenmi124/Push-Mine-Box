@@ -64,7 +64,13 @@ function outputLevel(){
 
 function enterLevel(){
     for(let i in PlayerPosition){
+        if(player.mine.grid[PlayerPosition[i]]['wall']=='enter'){
+            inputLevel(player.mine.grid[PlayerPosition[i]]['meta'][0], player.mine.grid[PlayerPosition[i]]['meta'][1])
+        }
         if(player.mine.grid[PlayerPosition[i]]['wall']=='win'){
+            if(player.mine.completeLevel.indexOf(player.mine.lastWorld+'/'+player.mine.lastLevel)==-1){
+                player.mine.completeLevel.push(player.mine.lastWorld+'/'+player.mine.lastLevel)
+            }
             inputLevel(player.mine.grid[PlayerPosition[i]]['meta'][0], player.mine.grid[PlayerPosition[i]]['meta'][1])
         }
     }

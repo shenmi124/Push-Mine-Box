@@ -1,6 +1,6 @@
 let modInfo = {
-	name: "扫箱子",
-	nameI18N: "扫箱子",// When you enabled the internationalizationMod, this is the name in the second language
+	name: "Push Mine & Box",
+	nameI18N: "Push Mine & Box",// When you enabled the internationalizationMod, this is the name in the second language
 	id: "mymod2",
 	author: "辉影神秘",
 	pointsName: "points",
@@ -10,9 +10,6 @@ let modInfo = {
 	// When enabled, it will ask the player to choose a language at the beginning of the game
 	changedDefaultLanguage: true,
 	// Changes the mod default language. false -> English, true -> Chinese
-
-	forceOneTab: false,// Enable Single-Tab Mode (This feature doesn't work as smoothly as you might expect; it's designed for experts)
-	showTab: 'tree-node',// If forceOneTab is enabled, it will always show this page when the page is refreshed
 
 	initialStartPoints: new Decimal (10), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
@@ -35,6 +32,11 @@ var colors = {
 		background: "#E5E5E5",
 		background_tooltip: "rgba(0, 0, 0, 0.75)",
 	},
+}
+
+// When enabled, it will hidden left table
+function hiddenLeftTable(){
+	return true && !player.mine.console
 }
 
 // Set your version in num and name
