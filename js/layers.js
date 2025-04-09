@@ -21,6 +21,9 @@ addLayer("mine", {
         lastWorld: 'world0',
         lastLevel: 'world',
 
+        lastEnterWorld: 'world0',
+        lastEnterLevel: 'world',
+
         levelRows: n(18),
         levelCols: n(33),
 
@@ -55,6 +58,7 @@ addLayer("mine", {
         {key: "d", description: "D", onPress(){timePast('d')}},
         {key: "r", description: "R", onPress(){inputLevel(player.mine.lastWorld, player.mine.lastLevel)}},
         {key: "z", description: "Z", onPress(){undo()}},
+        {key: "q", description: "Q", onPress(){quitLevel()}},
     ],
     grid: {
         rows: 18,
@@ -127,19 +131,21 @@ addLayer("mine", {
                 text = 'F'
             }
 
-            let a = Number(id) % 10
-            let b = Math.floor(Number(id) / 10) % 10
-            let c = Math.floor(Number(id) / 100) % 10
-            let d = Math.floor(Number(id) / 1000) % 10
-            if(n(c).add(n(d).mul(10)).eq(1)){
-                text = '<span style="font-size: 30px">'+(a+b*10)+'<span>'
-            }
-            if(n(a).add(n(b).mul(10)).eq(1)){
-                text = '<span style="font-size: 30px">'+(c+d*10)+'<span>'
-            }
-
             if(data['info']!=='none'){
                 text += '<span style="position: absolute; font-size: 20px; top: 0px; left: 5px">'+data['info']+'</span>'
+            }
+
+            if(player.mine.console){
+                let a = Number(id) % 10
+                let b = Math.floor(Number(id) / 10) % 10
+                let c = Math.floor(Number(id) / 100) % 10
+                let d = Math.floor(Number(id) / 1000) % 10
+                if(n(c).add(n(d).mul(10)).eq(1)){
+                    text += '<span style="font-size: 30px">'+(a+b*10)+'<span>'
+                }
+                if(n(a).add(n(b).mul(10)).eq(1)){
+                    text += '<span style="font-size: 30px">'+(c+d*10)+'<span>'
+                }
             }
 
             return '<span style="display: flex; justify-content: space-around">'+text+'</span>'
@@ -253,6 +259,16 @@ addLayer("mine", {
             canClick(){return true},
             onClick(){
                 enterLevel()
+            },
+            style(){
+                return {'width': '75px', 'height': '75px', 'background': '#fff'}
+            },
+        },
+        quit: {
+            display(){return '退出'},
+            canClick(){return true},
+            onClick(){
+                quitLevel()
             },
             style(){
                 return {'width': '75px', 'height': '75px', 'background': '#fff'}
@@ -614,6 +630,8 @@ addLayer("mine", {
                     ['row', [['clickable', 'a'], ['clickable', 's'], ['clickable', 'd']]],
                     'blank',
                     ['clickable', 'reset'],
+                    'blank',
+                    ['clickable', 'quit'],
                     'blank',
                     ['row', [['clickable', 'save'], 'blank', ['clickable', 'output'], 'blank', ['clickable', 'input']]],
                     'blank',

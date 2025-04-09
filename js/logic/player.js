@@ -61,14 +61,29 @@ function getCanWin(){
 function getCanMove(type, position, move){
     let movePosition = Number(position)+move
 
-    if(player.mine.grid[movePosition]['item']=='box'){
+    let wallType = player.mine.grid[movePosition]['wall']
+    let itemType = player.mine.grid[movePosition]['item']
+
+    if(wallType=='win'){
+        if(getCanWin()){
+            wallType = 'blank'
+        }else{
+            wallType = 'none'
+        }
+    }
+
+    if(wallType=='none'){
+        return false
+    }
+
+    if(itemType=='box'){
         let canMove = getCanMove('box', movePosition, move)
         if(canMove){
             playerPushBox('box', movePosition, move)
         }
         return canMove
     }
-    if(player.mine.grid[movePosition]['item']=='clue'){
+    if(itemType=='clue'){
         if(getRightClue(movePosition)=='more'){
             return false
         }
@@ -79,8 +94,8 @@ function getCanMove(type, position, move){
         }
         return canMove
     }
-    if(player.mine.grid[movePosition]['item']=='mine'){
-        if(type=='arrow' && player.mine.grid[movePosition]['wall']!=='none'){
+    if(itemType=='mine'){
+        if(type=='arrow' && wallType!=='none'){
             playerDie('mine', movePosition, move)
             return false
         }
@@ -90,17 +105,6 @@ function getCanMove(type, position, move){
             playerPushBox('mine', movePosition, move)
         }
         return canMove
-    }
-
-    if(player.mine.grid[movePosition]['wall']=='none'){
-        return false
-    }
-    if(player.mine.grid[movePosition]['wall']=='win'){
-        if(!getCanWin()){
-            return false
-        }else if(type=='arrow'){
-            return true
-        }
     }
 
     return true
@@ -145,39 +149,41 @@ function playerDie(type, position, move){
 }
 
 function timePast(direction){
-    stepsAdded = direction
-    getPosition()
-
-    let move = 0
-    if(direction=='w'){move = -100}
-    if(direction=='a'){move = -1}
-    if(direction=='s'){move = 100}
-    if(direction=='d'){move = 1}
-
-    if(PlayerPosition.length==0){
-        stepsAdded = ''
-    }
-
-    for(let i in PlayerPosition){
-        let canMove = getCanMove('arrow', PlayerPosition[i], move)
-        if(canMove && !(!getComplete(player.mine.grid[PlayerPosition[i]]['meta']) && player.mine.grid[PlayerPosition[i]]['wall']=='enter' && player.mine.grid[PlayerPosition[i]]['item']=='arrow')){
-            stepsLocation.push(Number(PlayerPosition[i])+move)
-            playerMove('arrow', PlayerPosition[i], move)
-        }else{
+    if(canTimePast){
+        stepsAdded = direction
+        getPosition()
+    
+        let move = 0
+        if(direction=='w'){move = -100}
+        if(direction=='a'){move = -1}
+        if(direction=='s'){move = 100}
+        if(direction=='d'){move = 1}
+    
+        if(PlayerPosition.length==0){
             stepsAdded = ''
         }
-    }
-
-    if(stepsAdded!==''){
-        steps.push(stepsAdded)
-        stepsTimes += 1
-        stepsAdded = ''
-    }
-
-    for(let i in WinPosition){
-        player.mine.grid[WinPosition[i]]['wall'] = 'blank'
-        player.mine.grid[WinPosition[i]]['wall'] = 'win'
-    }
     
-    getPosition()
+        for(let i in PlayerPosition){
+            let canMove = getCanMove('arrow', PlayerPosition[i], move)
+            if(canMove && !(!getComplete(player.mine.grid[PlayerPosition[i]]['meta']) && player.mine.grid[PlayerPosition[i]]['wall']=='enter' && player.mine.grid[PlayerPosition[i]]['item']=='arrow')){
+                stepsLocation.push(Number(PlayerPosition[i])+move)
+                playerMove('arrow', PlayerPosition[i], move)
+            }else{
+                stepsAdded = ''
+            }
+        }
+    
+        if(stepsAdded!==''){
+            steps.push(stepsAdded)
+            stepsTimes += 1
+            stepsAdded = ''
+        }
+    
+        for(let i in WinPosition){
+            player.mine.grid[WinPosition[i]]['wall'] = 'blank'
+            player.mine.grid[WinPosition[i]]['wall'] = 'win'
+        }
+        
+        getPosition()
+    }
 }

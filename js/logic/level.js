@@ -98,49 +98,64 @@ function inputLevel(world, level){
     getPosition()
 }
 
+function quitLevel(){
+    inputLevel('world0', 'world')
+}
+
+var canTimePast = true
 function undo(){
-    if(stepsTimes>=0){
-        let doing = steps[stepsTimes]
-        let location = stepsLocation[stepsTimes]
-
-        let move = 0
-        if(doing[0]=='w'){move = 100}
-        if(doing[0]=='a'){move = 1}
-        if(doing[0]=='s'){move = -100}
-        if(doing[0]=='d'){move = -1}
-
-        for(let str = 0; str <= doing.length; str++){
-            let data = doing[str]
-            if(data=='b'){
-                setTimeout(function(){
-                    playerPushBox('box', location-(move*str), move)
-                },0)
-                continue
+    if(canTimePast){
+        if(stepsTimes>=0){
+            let doing = steps[stepsTimes]
+            let location = stepsLocation[stepsTimes]
+    
+            let move = 0
+            if(doing[0]=='w'){move = 100}
+            if(doing[0]=='a'){move = 1}
+            if(doing[0]=='s'){move = -100}
+            if(doing[0]=='d'){move = -1}
+    
+            for(let str = 0; str <= doing.length; str++){
+                let data = doing[str]
+                if(data=='b'){
+                    canTimePast = false
+                    setTimeout(function(){
+                        playerPushBox('box', location-(move*str), move)
+                        canTimePast = true
+                    },0)
+                    continue
+                }
+                if(data=='c'){
+                    canTimePast = false
+                    setTimeout(function(){
+                        playerPushBox('clue', location-(move*str), move)
+                        canTimePast = true
+                    },0)
+                    continue
+                }
+                if(data=='m'){
+                    canTimePast = false
+                    setTimeout(function(){
+                        playerPushBox('mine', location-(move*str), move)
+                        canTimePast = true
+                    },0)
+                    continue
+                }
+                if(data=='D'){
+                    canTimePast = false
+                    setTimeout(function(){
+                        player.mine.grid[location]['item'] = 'mine'
+                        canTimePast = true
+                    },0)
+                    continue
+                }
+                playerMove('arrow', location, move)
             }
-            if(data=='c'){
-                setTimeout(function(){
-                    playerPushBox('clue', location-(move*str), move)
-                },0)
-                continue
-            }
-            if(data=='m'){
-                setTimeout(function(){
-                    playerPushBox('mine', location-(move*str), move)
-                },0)
-                continue
-            }
-            if(data=='D'){
-                setTimeout(function(){
-                    player.mine.grid[location]['item'] = 'mine'
-                },0)
-                continue
-            }
-            playerMove('arrow', location, move)
+            getPosition()
+    
+            steps = steps.slice(0, stepsTimes)
+            stepsLocation = stepsLocation.slice(0, stepsTimes)
+            stepsTimes -= 1
         }
-        getPosition()
-
-        steps = steps.slice(0, stepsTimes)
-        stepsLocation = stepsLocation.slice(0, stepsTimes)
-        stepsTimes -= 1
     }
 }

@@ -1,7 +1,7 @@
 let modInfo = {
 	name: "Push Mine & Box",
 	nameI18N: "Push Mine & Box",// When you enabled the internationalizationMod, this is the name in the second language
-	id: "mymod2",
+	id: "PushMineBox",
 	author: "辉影神秘",
 	pointsName: "points",
 	modFiles: ["layers.js", "tree.js", 'logic/level.js', 'logic/player.js', 'level/world0.js'],
