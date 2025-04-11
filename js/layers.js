@@ -1,8 +1,36 @@
 window.onkeydown = function(e) {
-    if (e.keyCode === 32 && e.target === document.body) {
+    if (e.keyCode===32 && e.target===document.body) {
         e.preventDefault();
     }
+
+    if(e.keyCode===192){
+        player.mine.console = !player.mine.console
+    }
+
+    if(player.mine.console){
+        if(e.keyCode>=49 && e.keyCode<=56){
+            edit({
+                type: 'item',
+                choose: 'clue',
+                data: n(e.keyCode-48).floor()
+            })
+        }
+        if(e.keyCode===66){
+            edit({
+                type: 'wall',
+                choose: 'blank',
+            })
+        }
+        if(e.keyCode===70){
+            edit({
+                type: 'item',
+                choose: 'mine',
+            })
+        }
+    }
 }
+
+let PEuser = true
 
 addLayer("mine", {
     name: "扫雷",
@@ -128,7 +156,8 @@ addLayer("mine", {
                 if(data['wall']=='blank'){
                     text = '<span style="color: black">F</span>'
                 }
-                text = 'F'
+                text = '<span style="color: black">F</span>'
+                //text = '<img src="png/flag.png" style="image-rendering: pixelated; width: var(--girdWidth)"></img>'
             }
 
             if(data['info']!=='none'){
@@ -238,6 +267,7 @@ addLayer("mine", {
                 'font-size': 'var(--fontSize)',
                 'border-radius': '0',
                 background,
+                'padding': 0,
                 'border-left': borderLeft,
                 'border-right': borderRight,
                 'border-top': borderTop,
@@ -257,6 +287,7 @@ addLayer("mine", {
         interaction: {
             display(){return '交互'},
             canClick(){return true},
+            unlocked(){return PEuser},
             onClick(){
                 enterLevel()
             },
@@ -267,6 +298,7 @@ addLayer("mine", {
         quit: {
             display(){return '退出'},
             canClick(){return true},
+            unlocked(){return PEuser},
             onClick(){
                 quitLevel()
             },
@@ -277,6 +309,7 @@ addLayer("mine", {
         reset: {
             display(){return '重置'},
             canClick(){return true},
+            unlocked(){return PEuser},
             onClick(){
                 if(player.mine.lastLevel!=='none'){
                     inputLevel(player.mine.lastWorld, player.mine.lastLevel)
@@ -291,6 +324,7 @@ addLayer("mine", {
         undo: {
             display(){return '撤销'},
             canClick(){return true},
+            unlocked(){return PEuser},
             onClick(){
                 undo()
             },
@@ -302,6 +336,7 @@ addLayer("mine", {
         w: {
             display(){return 'W'},
             canClick(){return true},
+            unlocked(){return PEuser},
             onClick(){timePast('w')},
             style(){
                 return {'width': '75px', 'height': '75px', 'background': '#fff'}
@@ -310,6 +345,7 @@ addLayer("mine", {
         a: {
             display(){return 'A'},
             canClick(){return true},
+            unlocked(){return PEuser},
             onClick(){timePast('a')},
             style(){
                 return {'width': '75px', 'height': '75px', 'background': '#fff'}
@@ -318,6 +354,7 @@ addLayer("mine", {
         s: {
             display(){return 'S'},
             canClick(){return true},
+            unlocked(){return PEuser},
             onClick(){timePast('s')},
             style(){
                 return {'width': '75px', 'height': '75px', 'background': '#fff'}
@@ -326,6 +363,7 @@ addLayer("mine", {
         d: {
             display(){return 'D'},
             canClick(){return true},
+            unlocked(){return PEuser},
             onClick(){timePast('d')},
             style(){
                 return {'width': '75px', 'height': '75px', 'background': '#fff'}
