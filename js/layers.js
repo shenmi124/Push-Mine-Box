@@ -8,7 +8,7 @@ window.onkeydown = function(e) {
     }
 
     if(player.mine.console){
-        if(e.keyCode>=49 && e.keyCode<=56){
+        if(e.keyCode>=48 && e.keyCode<=56){
             edit({
                 type: 'item',
                 choose: 'clue',
@@ -16,6 +16,12 @@ window.onkeydown = function(e) {
             })
         }
         if(e.keyCode===66){
+            edit({
+                type: 'item',
+                choose: 'box',
+            })
+        }
+        if(e.keyCode===86){
             edit({
                 type: 'wall',
                 choose: 'blank',

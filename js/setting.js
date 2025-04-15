@@ -105,3 +105,37 @@ addLayer("1layer", {
         ["display-text", function() { return getPointsDisplay() }]
     ],
 })
+
+addLayer("key", {
+    name: "key",
+    position: 2,
+    row: 0,
+    symbol() {return i18n('键位帮助', 'Changelog', false)},
+    startData() { return {
+        unlocked: true,
+        points: new Decimal(0),
+    }},
+    color: "#fff",
+    type: "none",
+    tooltip(){return false},
+    tabFormat: [
+        'blank',
+        'blank',
+        'blank',
+        'blank',
+        ["display-text", function(){return '- 操控 -'}],
+        ["display-text", function(){return '移动 - W/A/S/D'}],
+        ["display-text", function(){return '撤销 - Z'}],
+        ["display-text", function(){return '交互 - SPACE'}],
+        ["display-text", function(){return '重置 - R'}],
+        ["display-text", function(){return '返回 - Q'}],
+        'blank',
+        'blank',
+        ["display-text", function(){return '- 编辑 -'}],
+        ["display-text", function(){return '编辑模式 - ~'}],
+        ["display-text", function(){return '线索 - 1/2/3/4/5/6/7/8/9/0'}],
+        ["display-text", function(){return '雷 - F'}],
+        ["display-text", function(){return '空白地板 - V'}],
+        ["display-text", function(){return '箱子 - B'}],
+    ],
+})
