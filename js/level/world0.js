@@ -1,130 +1,26 @@
 let world0 = {
-    world: {"data":{"row":"11","col":"16"},"level":{"309":{"wall":"enter","meta":["world0","level2"],"info":"2"},"409":{"wall":"blank"},"505":{"wall":"win","meta":["world1","world"],"info":"W0"},"506":{"wall":"blank","item":"arrow"},"507":{"wall":"enter","meta":["world0","level0"],"info":"0"},"508":{"wall":"blank"},"509":{"wall":"enter","meta":["world0","level1"],"info":"1"},"510":{"wall":"blank"},"511":{"wall":"blank"},"605":{"wall":"blank"},"611":{"wall":"blank"},"705":{"wall":"blank"},"709":{"wall":"enter","meta":["world0","level4"],"info":"4"},"710":{"wall":"blank"},"711":{"wall":"enter","meta":["world0","level3"],"info":"3"},"805":{"wall":"blank"},"811":{"wall":"blank"},"903":{"item":"mine"},"904":{"wall":"blank"},"905":{"wall":"blank","item":"clue","data":"1"},"906":{"wall":"blank"},"907":{"wall":"blank"},"908":{"wall":"blank"},"909":{"wall":"blank"},"910":{"wall":"blank"},"911":{"wall":"blank"},"912":{"wall":"enter","meta":["world0","level5"],"info":"5"},"913":{"wall":"blank"},"914":{"wall":"enter","meta":["world0","level6"],"info":"6!"}}},
+    world: {"data":{"row":"11","col":"18"},"level":{"303":{"wall":"blank","meta":["none","none"]},"304":{"wall":"blank","meta":["none","none"]},"305":{"wall":"blank","meta":["none","none"]},"309":{"wall":"blank","meta":["none","none"]},"310":{"wall":"blank","meta":["none","none"]},"311":{"wall":"blank","meta":["none","none"]},"312":{"wall":"blank","meta":["none","none"]},"313":{"wall":"blank","meta":["none","none"]},"314":{"wall":"blank","meta":["none","none"]},"315":{"wall":"blank","meta":["none","none"]},"403":{"wall":"blank","meta":["none","none"]},"404":{"wall":"blank","item":"arrow","meta":["none","none"]},"405":{"wall":"blank"},"406":{"wall":"enter","meta":["world0","level1"],"info":"1"},"407":{"wall":"enter","meta":["world0","level2"],"info":"2"},"408":{"wall":"enter","meta":["world0","level3"],"info":"3"},"409":{"wall":"blank","meta":["none","none"]},"410":{"wall":"enter","meta":["world0","level4"],"info":"4"},"411":{"wall":"blank","meta":["none","none"]},"412":{"wall":"enter","meta":["world0","level5"],"info":"5"},"413":{"wall":"blank","meta":["none","none"]},"414":{"wall":"enter","meta":["world0","level6"],"info":"6"},"415":{"wall":"blank","meta":["none","none"]},"416":{"wall":"win","meta":["world","world"],"info":"W"},"503":{"wall":"blank","meta":["none","none"]},"504":{"wall":"blank","meta":["none","none"]},"505":{"wall":"blank","meta":["none","none"]},"509":{"wall":"blank","meta":["none","none"]},"510":{"wall":"blank","meta":["none","none"]},"511":{"wall":"blank","meta":["none","none"]},"512":{"wall":"blank","meta":["none","none"]},"513":{"wall":"blank","meta":["none","none"]},"514":{"wall":"blank"},"515":{"wall":"blank","meta":["none","none"]},"612":{"wall":"blank","meta":["none","none"]},"711":{"wall":"blank","meta":["none","none"]},"712":{"wall":"blank","meta":["none","none"]},"713":{"wall":"blank","meta":["none","none"]},"811":{"wall":"blank","meta":["none","none"]},"812":{"wall":"enter","meta":["world0","level7"],"info":"7!"},"813":{"wall":"blank","meta":["none","none"]},"911":{"wall":"blank","meta":["none","none"]},"912":{"wall":"blank","meta":["none","none"]},"913":{"wall":"blank","meta":["none","none"]}}},
 
-    level0: {"data":{"row":"8","col":"11"},"level":{"306":{"item":"mine"},"406":{"wall":"blank"},"506":{"wall":"blank","item":"clue","data":"1"},"603":{"wall":"blank","item":"arrow","data":true},"604":{"wall":"blank"},"605":{"wall":"blank"},"606":{"wall":"blank"},"607":{"wall":"blank"},"608":{"wall":"blank"},"609":{"wall":"win","meta":["world0","world"],"info":"0"}}},
+    level1: {"data":{"row":"8","col":"11"},"level":{"306":{"item":"mine"},"406":{"wall":"blank"},"506":{"wall":"blank","item":"clue","data":"1"},"603":{"wall":"blank","item":"arrow","data":true},"604":{"wall":"blank"},"605":{"wall":"blank"},"606":{"wall":"blank"},"607":{"wall":"blank"},"608":{"wall":"blank"},"609":{"wall":"win","meta":["world0","world"],"info":"1"}}},
 
-    level1: {"data":{"row":"10","col":"12"},"level":{"307":{"item":"mine"},"406":{"item":"mine"},"407":{"wall":"blank"},"506":{"wall":"blank"},"507":{"wall":"blank","item":"clue","data":"2"},"603":{"wall":"blank","item":"arrow"},"604":{"wall":"blank"},"605":{"wall":"blank"},"606":{"wall":"blank","item":"clue","data":"1"},"607":{"wall":"blank"},"608":{"wall":"blank"},"609":{"wall":"blank"},"610":{"wall":"win","meta":["world0","world"],"info":"1"},"706":{"wall":"blank"},"708":{"wall":"blank"},"806":{"wall":"blank"},"807":{"wall":"blank"},"808":{"wall":"blank"}}},
+    level2: {"data":{"row":"8","col":"9"},"level":{"304":{"item":"mine"},"306":{"item":"mine"},"403":{"wall":"blank","item":"arrow"},"404":{"wall":"blank","item":"clue","data":"1"},"405":{"wall":"blank"},"406":{"wall":"blank"},"407":{"wall":"win","meta":["world0","world"],"info":"2"},"503":{"wall":"blank"},"504":{"wall":"blank","item":"clue","data":"2"},"505":{"wall":"blank","item":"box"},"506":{"wall":"blank"},"603":{"wall":"blank"},"604":{"wall":"blank"},"605":{"wall":"blank"},"606":{"wall":"blank"}}},
 
-    level2: {"data":{"row":"11","col":"15"},"level":{"304":{"item":"mine"},"312":{"item":"mine"},"403":{"item":"mine"},"404":{"wall":"blank","item":"arrow"},"405":{"wall":"blank"},"406":{"wall":"blank"},"407":{"wall":"blank"},"408":{"wall":"blank"},"409":{"wall":"blank"},"410":{"wall":"blank"},"411":{"wall":"blank"},"412":{"wall":"blank"},"413":{"item":"mine"},"504":{"wall":"blank"},"506":{"wall":"blank","item":"clue","data":"3"},"508":{"wall":"blank","item":"clue","data":"1"},"510":{"wall":"blank","item":"clue","data":"2"},"512":{"wall":"blank"},"604":{"wall":"blank"},"606":{"wall":"blank","item":"clue","data":"0"},"608":{"wall":"blank","item":"clue","data":"2"},"610":{"wall":"blank","item":"clue","data":"1"},"612":{"wall":"blank"},"703":{"item":"mine"},"704":{"wall":"blank"},"706":{"wall":"blank","item":"clue","data":"1"},"708":{"wall":"blank","item":"clue","data":"1"},"710":{"wall":"blank","item":"clue","data":"3"},"712":{"wall":"blank"},"713":{"item":"mine"},"803":{"item":"mine"},"804":{"wall":"blank"},"805":{"wall":"blank"},"806":{"wall":"blank"},"807":{"wall":"blank"},"808":{"wall":"blank"},"809":{"wall":"blank"},"810":{"wall":"blank"},"811":{"wall":"blank"},"812":{"wall":"blank"},"813":{"item":"mine"},"904":{"item":"mine"},"908":{"wall":"win","meta":["world0","world"],"info":"2"},"912":{"item":"mine"}}},
-
-    level3: {"data":{"row":"11","col":"11"},"level":{"304":{"wall":"blank"},"305":{"wall":"blank"},"306":{"wall":"blank"},"307":{"wall":"blank"},"403":{"item":"mine"},"404":{"wall":"blank"},"407":{"wall":"blank"},"504":{"wall":"blank"},"505":{"wall":"blank"},"506":{"wall":"blank"},"507":{"wall":"blank"},"603":{"item":"mine"},"604":{"wall":"blank"},"606":{"wall":"blank","item":"clue","data":"2"},"704":{"wall":"blank"},"706":{"wall":"blank","item":"clue","data":"0"},"707":{"wall":"blank"},"708":{"wall":"blank"},"709":{"wall":"win","meta":["world0","world"],"info":"3"},"804":{"wall":"blank"},"805":{"wall":"blank","data":"1"},"806":{"wall":"blank","item":"clue","data":"1"},"807":{"wall":"blank","data":"1"},"904":{"wall":"blank","item":"arrow"},"905":{"wall":"blank"},"906":{"wall":"blank"},"907":{"item":"mine"}}},
+    level3: {"data":{"row":"9","col":"9"},"level":{"303":{"wall":"win","meta":["world","level9"],"info":"3"},"305":{"item":"clue","data":"0"},"307":{"item":"mine"},"403":{"wall":"blank","item":"arrow"},"404":{"wall":"blank"},"405":{"wall":"blank","item":"mine"},"406":{"wall":"blank"},"407":{"wall":"blank"},"503":{"wall":"blank"},"504":{"wall":"blank","item":"clue","data":"1"},"505":{"wall":"blank"},"506":{"wall":"blank","item":"clue","data":"2"},"507":{"wall":"blank"},"603":{"wall":"blank"},"604":{"wall":"blank"},"605":{"wall":"blank"},"606":{"wall":"blank"},"607":{"wall":"blank"},"703":{"wall":"blank"},"704":{"wall":"blank"}}},
 
     level4: {"data":{"row":"11","col":"9"},"level":{"305":{"item":"clue","data":"2"},"308":{"data":"1"},"403":{"wall":"blank"},"404":{"wall":"blank"},"405":{"wall":"blank","data":"2"},"406":{"wall":"blank","item":"mine"},"407":{"wall":"blank","data":"3"},"503":{"wall":"blank"},"504":{"wall":"blank","item":"mine","data":"4"},"505":{"wall":"blank","data":"2"},"506":{"wall":"blank","item":"mine","data":"2"},"507":{"wall":"blank"},"603":{"wall":"blank"},"604":{"wall":"blank","item":"clue","data":"1"},"605":{"wall":"blank","data":"4"},"606":{"wall":"blank","data":"4"},"607":{"wall":"blank","item":"mine"},"703":{"wall":"blank"},"704":{"wall":"blank"},"705":{"wall":"blank","item":"clue","data":"4"},"706":{"wall":"blank"},"707":{"wall":"blank","item":"mine"},"803":{"wall":"blank","item":"arrow"},"804":{"wall":"blank"},"805":{"wall":"blank"},"806":{"wall":"blank"},"807":{"wall":"blank"},"903":{"wall":"win","meta":["world0","world"],"info":"4"},"904":{"wall":"blank"},"905":{"wall":"blank","data":"2"},"906":{"wall":"blank","data":"2"},"907":{"wall":"blank","data":"2"}}},
 
-    level5: {"data":{"row":"10","col":"12"},"level":{"304":{"wall":"blank"},"305":{"wall":"blank"},"308":{"wall":"blank"},"309":{"wall":"blank"},"310":{"wall":"blank"},"404":{"wall":"blank","item":"box"},"405":{"wall":"blank"},"406":{"wall":"blank"},"407":{"wall":"blank"},"408":{"wall":"blank"},"409":{"wall":"blank","item":"clue","data":"1"},"410":{"wall":"blank"},"504":{"wall":"blank"},"508":{"wall":"blank"},"603":{"wall":"blank","item":"arrow","data":true},"604":{"wall":"blank"},"605":{"wall":"blank","item":"mine"},"606":{"wall":"win","item":"clue","data":"2","meta":["world0","world"],"info":"5"},"607":{"wall":"blank","item":"mine"},"608":{"wall":"blank"},"609":{"wall":"blank"},"704":{"wall":"blank"},"708":{"wall":"blank"},"709":{"wall":"blank","item":"clue","data":"1"},"710":{"wall":"blank"},"804":{"wall":"blank"},"805":{"wall":"blank"},"806":{"wall":"blank"},"807":{"wall":"blank"},"808":{"wall":"blank"},"809":{"wall":"blank"},"810":{"wall":"blank"}}},
+    level5: {"data":{"row":"11","col":"15"},"level":{"304":{"item":"mine"},"312":{"item":"mine"},"403":{"item":"mine"},"404":{"wall":"blank","item":"arrow"},"405":{"wall":"blank"},"406":{"wall":"blank"},"407":{"wall":"blank"},"408":{"wall":"blank"},"409":{"wall":"blank"},"410":{"wall":"blank"},"411":{"wall":"blank"},"412":{"wall":"blank"},"413":{"item":"mine"},"504":{"wall":"blank"},"506":{"wall":"blank","item":"clue","data":"3"},"508":{"wall":"blank","item":"clue","data":"1"},"510":{"wall":"blank","item":"clue","data":"2"},"512":{"wall":"blank"},"604":{"wall":"blank"},"606":{"wall":"blank","item":"clue","data":"0"},"608":{"wall":"blank","item":"clue","data":"2"},"610":{"wall":"blank","item":"clue","data":"1"},"612":{"wall":"blank"},"703":{"item":"mine"},"704":{"wall":"blank"},"706":{"wall":"blank","item":"clue","data":"1"},"708":{"wall":"blank","item":"clue","data":"1"},"710":{"wall":"blank","item":"clue","data":"3"},"712":{"wall":"blank"},"713":{"item":"mine"},"803":{"item":"mine"},"804":{"wall":"blank"},"805":{"wall":"blank"},"806":{"wall":"blank"},"807":{"wall":"blank"},"808":{"wall":"blank"},"809":{"wall":"blank"},"810":{"wall":"blank"},"811":{"wall":"blank"},"812":{"wall":"blank"},"813":{"item":"mine"},"904":{"item":"mine"},"908":{"wall":"win","meta":["world0","world"],"info":"5"},"912":{"item":"mine"}}},
 
-    level6: {"data":{"row":"11","col":"12"},"level":{"305":{"item":"mine"},"306":{"item":"mine"},"307":{"item":"mine"},"403":{"item":"clue","data":"0"},"405":{"wall":"blank"},"406":{"wall":"blank"},"407":{"wall":"blank","item":"clue","data":"3"},"408":{"wall":"blank"},"409":{"wall":"blank"},"410":{"wall":"blank"},"503":{"wall":"blank"},"504":{"wall":"blank"},"505":{"wall":"blank","item":"mine"},"506":{"wall":"blank"},"507":{"wall":"blank"},"508":{"wall":"blank"},"509":{"wall":"blank"},"510":{"wall":"win","meta":["world0","world"],"info":"6!"},"603":{"wall":"blank"},"604":{"wall":"blank","item":"clue","data":"3"},"605":{"wall":"blank","item":"mine"},"606":{"wall":"blank","item":"clue","data":"3"},"607":{"wall":"blank","item":"clue","data":"1"},"608":{"wall":"blank"},"609":{"wall":"blank"},"610":{"wall":"blank","item":"box","data":"1"},"703":{"wall":"blank"},"704":{"wall":"blank"},"705":{"wall":"blank","item":"clue","data":"2"},"706":{"wall":"blank"},"707":{"wall":"blank"},"708":{"item":"mine"},"710":{"wall":"blank","data":"1"},"803":{"wall":"blank","item":"arrow"},"804":{"wall":"blank"},"805":{"wall":"blank"},"806":{"wall":"blank"},"807":{"item":"mine"},"907":{"item":"clue","data":"1"}}},
+    level6: {"data":{"row":"10","col":"12"},"level":{"304":{"wall":"blank"},"305":{"wall":"blank"},"308":{"wall":"blank"},"309":{"wall":"blank"},"310":{"wall":"blank"},"404":{"wall":"blank","item":"box"},"405":{"wall":"blank"},"406":{"wall":"blank"},"407":{"wall":"blank"},"408":{"wall":"blank"},"409":{"wall":"blank","item":"clue","data":"1"},"410":{"wall":"blank"},"504":{"wall":"blank"},"508":{"wall":"blank"},"603":{"wall":"blank","item":"arrow","data":true},"604":{"wall":"blank"},"605":{"wall":"blank","item":"mine"},"606":{"wall":"win","item":"clue","data":"2","meta":["world0","world"],"info":"6"},"607":{"wall":"blank","item":"mine"},"608":{"wall":"blank"},"609":{"wall":"blank"},"704":{"wall":"blank"},"708":{"wall":"blank"},"709":{"wall":"blank","item":"clue","data":"1"},"710":{"wall":"blank"},"804":{"wall":"blank"},"805":{"wall":"blank"},"806":{"wall":"blank"},"807":{"wall":"blank"},"808":{"wall":"blank"},"809":{"wall":"blank"},"810":{"wall":"blank"}}},
 
-    level7: {"data":{"row":"11","col":"16"},"level":{"411":{"item":"mine"},"413":{"item":"mine"},"415":{"item":"mine"},"503":{"wall":"blank"},"504":{"wall":"blank"},"505":{"wall":"blank"},"506":{"wall":"blank"},"507":{"wall":"blank"},"508":{"wall":"blank"},"509":{"wall":"blank"},"510":{"wall":"blank"},"511":{"wall":"blank"},"512":{"wall":"blank"},"513":{"wall":"blank"},"514":{"wall":"blank"},"515":{"item":"mine"},"603":{"wall":"blank"},"604":{"wall":"blank","item":"clue","data":"2"},"605":{"wall":"blank","item":"clue","data":"3"},"606":{"wall":"blank"},"608":{"wall":"blank"},"610":{"wall":"blank"},"611":{"wall":"blank"},"612":{"wall":"blank"},"613":{"wall":"blank"},"614":{"wall":"blank"},"615":{"item":"mine"},"703":{"wall":"blank"},"704":{"wall":"blank"},"705":{"wall":"blank","item":"clue","data":"1"},"706":{"wall":"blank"},"708":{"wall":"blank"},"709":{"wall":"blank","item":"box"},"710":{"wall":"blank","item":"mine"},"711":{"wall":"blank"},"712":{"wall":"blank"},"713":{"wall":"blank"},"714":{"wall":"blank"},"803":{"wall":"blank"},"804":{"wall":"blank","item":"clue","data":"3"},"805":{"wall":"blank"},"806":{"wall":"blank"},"808":{"wall":"blank"},"810":{"wall":"blank"},"811":{"wall":"blank","item":"box"},"812":{"wall":"blank"},"813":{"wall":"blank"},"814":{"wall":"blank"},"903":{"wall":"blank","item":"arrow"},"904":{"wall":"blank"},"905":{"wall":"blank"},"906":{"wall":"blank"},"908":{"wall":"blank"},"909":{"wall":"blank"},"910":{"wall":"blank"},"911":{"wall":"blank"},"912":{"wall":"blank"},"913":{"wall":"blank"},"914":{"wall":"blank"}}},
-
-    level9: {
-        "503": {
-            "item": "mine"
-        },
-        "505": {
-            "wall": "blank"
-        },
-        "506": {
-            "wall": "blank",
-            "data": "2"
-        },
-        "507": {
-            "wall": "blank"
-        },
-        "508": {
-            "wall": "blank"
-        },
-        "603": {
-            "wall": "blank"
-        },
-        "604": {
-            "wall": "blank",
-            "data": "2"
-        },
-        "605": {
-            "wall": "blank",
-            "item": "clue",
-            "data": "1"
-        },
-        "606": {
-            "wall": "blank",
-            "item": "clue",
-            "data": "2"
-        },
-        "607": {
-            "wall": "blank",
-            "data": [
-                "",
-                ""
-            ]
-        },
-        "608": {
-            "wall": "win",
-            "data": [
-                "",
-                ""
-            ]
-        },
-        "704": {
-            "wall": "blank"
-        },
-        "705": {
-            "item": "mine"
-        },
-        "706": {
-            "wall": "blank"
-        },
-        "707": {
-            "data": "2"
-        },
-        "708": {
-            "data": "1"
-        },
-        "804": {
-            "wall": "blank"
-        },
-        "806": {
-            "wall": "blank"
-        },
-        "812": {
-            "data": [
-                "world0",
-                "level0"
-            ]
-        },
-        "904": {
-            "wall": "blank"
-        },
-        "906": {
-            "wall": "blank"
-        },
-        "1003": {
-            "wall": "blank",
-            "item": "arrow"
-        },
-        "1004": {
-            "wall": "blank"
-        },
-        "1005": {
-            "wall": "blank"
-        },
-        "1006": {
-            "wall": "blank"
-        },
-        "1112": {
-            "data": [
-                "world0",
-                "level2"
-            ]
-        }
-    },
+    level7: {"data":{"row":"11","col":"12"},"level":{"305":{"item":"mine"},"306":{"item":"mine"},"307":{"item":"mine"},"403":{"item":"clue","data":"0"},"405":{"wall":"blank"},"406":{"wall":"blank"},"407":{"wall":"blank","item":"clue","data":"3"},"408":{"wall":"blank"},"409":{"wall":"blank"},"410":{"wall":"blank"},"503":{"wall":"blank"},"504":{"wall":"blank"},"505":{"wall":"blank","item":"mine"},"506":{"wall":"blank"},"507":{"wall":"blank"},"508":{"wall":"blank"},"509":{"wall":"blank"},"510":{"wall":"win","meta":["world0","world"],"info":"7!"},"603":{"wall":"blank"},"604":{"wall":"blank","item":"clue","data":"3"},"605":{"wall":"blank","item":"mine"},"606":{"wall":"blank","item":"clue","data":"3"},"607":{"wall":"blank","item":"clue","data":"1"},"608":{"wall":"blank"},"609":{"wall":"blank"},"610":{"wall":"blank","item":"box","data":"1"},"703":{"wall":"blank"},"704":{"wall":"blank"},"705":{"wall":"blank","item":"clue","data":"2"},"706":{"wall":"blank"},"707":{"wall":"blank"},"708":{"item":"mine"},"710":{"wall":"blank","data":"1"},"803":{"wall":"blank","item":"arrow"},"804":{"wall":"blank"},"805":{"wall":"blank"},"806":{"wall":"blank"},"807":{"item":"mine"},"907":{"item":"clue","data":"1"}}},
 }
 
-let world1 = {
-    world: {"data":{"row":"9","col":"17"},"level":{"303":{"wall":"blank"},"304":{"wall":"blank"},"305":{"wall":"blank"},"307":{"wall":"blank"},"308":{"wall":"blank"},"309":{"wall":"blank"},"313":{"wall":"blank"},"314":{"wall":"blank"},"404":{"wall":"blank"},"407":{"wall":"blank"},"410":{"wall":"blank"},"412":{"wall":"blank"},"415":{"wall":"blank"},"504":{"wall":"blank"},"507":{"wall":"blank"},"508":{"wall":"blank"},"509":{"wall":"blank"},"512":{"wall":"blank"},"604":{"wall":"blank"},"607":{"wall":"blank"},"610":{"wall":"blank"},"612":{"wall":"blank"},"615":{"wall":"blank"},"704":{"wall":"blank","item":"arrow"},"705":{"wall":"enter","meta":["world0","world"],"info":"W0"},"707":{"wall":"blank"},"708":{"wall":"blank"},"709":{"wall":"blank"},"713":{"wall":"blank"},"714":{"wall":"blank"}}},
+let world = {
+    world: {"data":{"row":"9","col":"17"},"level":{"303":{"wall":"blank"},"304":{"wall":"blank"},"305":{"wall":"blank"},"307":{"wall":"blank"},"308":{"wall":"blank"},"309":{"wall":"blank"},"313":{"wall":"blank"},"314":{"wall":"blank"},"404":{"wall":"blank"},"407":{"wall":"blank"},"410":{"wall":"enter","meta":["world1A","world"],"info":"W1A"},"412":{"wall":"blank"},"415":{"wall":"blank"},"504":{"wall":"blank"},"507":{"wall":"blank"},"508":{"wall":"blank"},"509":{"wall":"blank"},"512":{"wall":"blank"},"604":{"wall":"blank"},"607":{"wall":"blank"},"610":{"wall":"enter","meta":["world1B","world"],"info":"W1B"},"612":{"wall":"blank"},"615":{"wall":"blank"},"704":{"wall":"blank","item":"arrow"},"705":{"wall":"enter","meta":["world0","world"],"info":"W0"},"707":{"wall":"blank"},"708":{"wall":"blank"},"709":{"wall":"blank"},"713":{"wall":"blank"},"714":{"wall":"blank"}}},
 }
 
 let All = {
+    world: world,
     world0: world0,
-    world1: world1
 }

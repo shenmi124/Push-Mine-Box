@@ -1,37 +1,43 @@
-window.onkeydown = function(e) {
-    if (e.keyCode===32 && e.target===document.body) {
+function getTextInput(){
+    return document.activeElement.classList[0]!=='textinput'
+}
+
+window.onkeydown = function(e){
+    if (e.keyCode===32){
         e.preventDefault();
     }
 
-    if(e.keyCode===192){
-        player.mine.console = !player.mine.console
-    }
-
-    if(player.mine.console){
-        if(e.keyCode>=48 && e.keyCode<=56){
-            edit({
-                type: 'item',
-                choose: 'clue',
-                data: n(e.keyCode-48).floor()
-            })
+    if(getTextInput()){
+        if(e.keyCode===192){
+            player.mine.console = !player.mine.console
         }
-        if(e.keyCode===66){
-            edit({
-                type: 'item',
-                choose: 'box',
-            })
-        }
-        if(e.keyCode===86){
-            edit({
-                type: 'wall',
-                choose: 'blank',
-            })
-        }
-        if(e.keyCode===70){
-            edit({
-                type: 'item',
-                choose: 'mine',
-            })
+    
+        if(player.mine.console){
+            if(e.keyCode>=48 && e.keyCode<=56){
+                edit({
+                    type: 'item',
+                    choose: 'clue',
+                    data: n(e.keyCode-48).floor()
+                })
+            }
+            if(e.keyCode===66){
+                edit({
+                    type: 'item',
+                    choose: 'box',
+                })
+            }
+            if(e.keyCode===86){
+                edit({
+                    type: 'wall',
+                    choose: 'blank',
+                })
+            }
+            if(e.keyCode===70){
+                edit({
+                    type: 'item',
+                    choose: 'mine',
+                })
+            }
         }
     }
 }
@@ -76,6 +82,12 @@ addLayer("mine", {
             inputLevel(player.mine.lastWorld, player.mine.lastLevel)
         }
 
+        if(player.mine.console){
+            document.getElementById("consoleMod").style.display = ''
+        }else{
+            document.getElementById("consoleMod").style.display = 'none'
+        }
+
         let width = (window.innerWidth * 0.8) - 150
         let height = (window.innerHeight * 0.8) - 75
         width = width / Number(player.mine.levelCols)
@@ -85,14 +97,14 @@ addLayer("mine", {
         document.body.style.setProperty('--fontSize', gird-7+'px')
     },
     hotkeys: [
-        {key: " ", description: "SPACE", onPress(){enterLevel()}},
-        {key: "w", description: "W", onPress(){timePast('w')}},
-        {key: "a", description: "A", onPress(){timePast('a')}},
-        {key: "s", description: "S", onPress(){timePast('s')}},
-        {key: "d", description: "D", onPress(){timePast('d')}},
-        {key: "r", description: "R", onPress(){inputLevel(player.mine.lastWorld, player.mine.lastLevel)}},
-        {key: "z", description: "Z", onPress(){undo()}},
-        {key: "q", description: "Q", onPress(){quitLevel()}},
+        {key: " ", unlocked(){return getTextInput()}, description: "SPACE", onPress(){enterLevel()}},
+        {key: "w", unlocked(){return getTextInput()}, description: "W", onPress(){timePast('w')}},
+        {key: "a", unlocked(){return getTextInput()}, description: "A", onPress(){timePast('a')}},
+        {key: "s", unlocked(){return getTextInput()}, description: "S", onPress(){timePast('s')}},
+        {key: "d", unlocked(){return getTextInput()}, description: "D", onPress(){timePast('d')}},
+        {key: "r", unlocked(){return getTextInput()}, description: "R", onPress(){inputLevel(player.mine.lastWorld, player.mine.lastLevel)}},
+        {key: "z", unlocked(){return getTextInput()}, description: "Z", onPress(){undo()}},
+        {key: "q", unlocked(){return getTextInput()}, description: "Q", onPress(){quitLevel()}},
     ],
     grid: {
         rows: 18,
@@ -114,6 +126,10 @@ addLayer("mine", {
             return true
         },
         onClick(data, id){
+            if(getTextInput()){
+                editInput()
+            }
+
             if(player.mine.console){
                 if(player.mine.grid[id][player.mine.type]==player.mine.choose){
                     player.mine.grid[id][player.mine.type] = 'none'
@@ -676,6 +692,7 @@ addLayer("mine", {
                     ['clickable', 'reset'],
                     'blank',
                     ['clickable', 'quit'],
+                    'blank',
                     'blank',
                     ['row', [['clickable', 'save'], 'blank', ['clickable', 'output'], 'blank', ['clickable', 'input']]],
                     'blank',

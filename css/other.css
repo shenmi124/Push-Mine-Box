@@ -1,0 +1,12 @@
+.textinput {
+    width: 200px;
+    position: absolute;
+    left: 0;
+    z-index: 999;
+}
+
+.inputbutton {
+    width: 200px;
+    position: absolute;
+    z-index: 999;
+}

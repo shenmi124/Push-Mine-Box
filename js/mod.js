@@ -4,7 +4,7 @@ let modInfo = {
 	id: "PushMineBox",
 	author: "辉影神秘",
 	pointsName: "points",
-	modFiles: ["layers.js", "tree.js", 'logic/level.js', 'logic/player.js', 'level/world0.js'],
+	modFiles: ["layers.js", "tree.js", 'logic/edit.js', 'logic/level.js', 'logic/player.js', 'level/world0.js'],
 
 	internationalizationMod: false,
 	// When enabled, it will ask the player to choose a language at the beginning of the game
@@ -41,8 +41,8 @@ function hiddenLeftTable(){
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "0.1",
+	name: "Push Mine",
 }
 
 function changelog(){

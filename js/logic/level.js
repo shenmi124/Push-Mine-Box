@@ -13,12 +13,28 @@ function startData(){
     }
 }
 
+function editInput(){
+    edit({
+        type: document.getElementById("editType").value,
+        choose: document.getElementById("editChoose").value,
+        data: document.getElementById("editData").value,
+        meta: [document.getElementById("editMetaMain").value, document.getElementById("editMetaSide").value],
+        info: document.getElementById("editInfo").value
+    })
+}
+
 function edit(Class){
-    player.mine.type = Class.type ?? 'none'
-    player.mine.choose = Class.choose ?? 'none'
-    player.mine.data = Class.data ?? 'none'
+    document.getElementById("editType").value = player.mine.type = Class.type ?? 'none'
+    document.getElementById("editChoose").value = player.mine.choose = Class.choose ?? 'none'
+    document.getElementById("editData").value = player.mine.data = Class.data ?? 'none'
     player.mine.meta = Class.meta ?? 'none'
-    player.mine.info = Class.info ?? 'none'
+    if(player.mine.meta!=='none'){
+        document.getElementById("editMetaMain").value = player.mine.meta[0]
+        document.getElementById("editMetaSide").value = player.mine.meta[1]
+    }else{
+        document.getElementById("editMetaMain").value = document.getElementById("editMetaSide").value = 'none'
+    }
+    document.getElementById("editInfo").value = player.mine.info = Class.info ?? 'none'
 }
 
 function resetLevel(){

@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
+	<link rel="stylesheet" type="text/css" href="css/other.css" />
 	<link rel="stylesheet" type="text/css" href="css/system-style.css" />
 	<link rel="stylesheet" type="text/css" href="css/bars.css" />
 	<link rel="stylesheet" type="text/css" href="css/components.css" />
@@ -114,5 +115,16 @@
 		</div>
 		<div class = "bg2" v-bind:style = "tmp.backgroundStyle"></div>
 
+		<div id="consoleMod">
+			<button style="top: calc(100% - 120px); width: 103.5px; height: 20px; left: 0;" onclick="saveEdit()" class="inputbutton">保存结构</button>
+			<button style="top: calc(100% - 120px); width: 103.5px; height: 20px; left: 103.5px;" onclick="loadEdit()" class="inputbutton">加载结构</button>
+			<!--<button style="top: calc(100% - 120px); width: 174.89px; height: 20px;" onclick="editInput()" class="textinput">自动覆写</button>-->
+			<input style="top: calc(100% - 100px);" class="textinput" type="text" value="wall" id="editType">
+			<input style="top: calc(100% - 80px);" class="textinput" type="text" value="blank" id="editChoose">
+			<input style="top: calc(100% - 60px);" class="textinput" type="text" value="none" id="editData">
+			<input style="top: calc(100% - 40px); width: 100px; left: 0;" class="textinput" type="text" value="none" id="editMetaMain">
+			<input style="top: calc(100% - 40px); width: 100px; left: 100px;" class="textinput" type="text" value="none" id="editMetaSide">
+			<input style="top: calc(100% - 20px);" class="textinput" type="text" value="none" id="editInfo">
+		</div>
 	</div>
 </body>
