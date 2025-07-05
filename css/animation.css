@@ -1,0 +1,45 @@
+:root {
+    --LastFinish: #eeee00;
+}
+
+.move {
+    animation: move 0.3s;
+}
+
+@keyframes move {
+    0% {
+        transform: translate(var(--HorizontalGirdWidth), var(--VerticalGirdWidth));
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+.deadmove {
+    animation: deadmove 0.3s;
+    transform-origin: 32.5% 32.5%;
+}
+
+@keyframes deadmove {
+    0% {
+        transform: translate(var(--HorizontalGirdWidth), var(--VerticalGirdWidth));
+        fill: lightgreen;
+    }
+    100% {
+        transform: translate(0, 0);
+        fill: lightcoral;
+    }
+}
+
+.finish {
+    animation: finish 0.3s;
+}
+
+@keyframes finish {
+    0% {
+        fill: var(--LastFinish);
+    }
+    100% {
+        fill: var(--Finish);
+    }
+}
