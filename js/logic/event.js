@@ -55,7 +55,7 @@ function playerMove(move){
         let getTarget = getArrowPositon(getTargetPosition[0], getTargetPosition[1])
 
         let canMove = true
-        let wallCanMove = false
+        let wallCanMove = true
         let itemCanMove = true
 
         for(let i in components){
@@ -73,16 +73,18 @@ function playerMove(move){
                     }
                 }
                 if(i=='wall'){
-                    wallCanMove = components[i][getTarget[i]['type']]['canMove'](getTargetPosition[0], getTargetPosition[1])
+                    wallCanMove = components[i][getTarget[i]['type']]['canMove'](position, getTargetPosition)
                 }
                 if(i=='item'){
-                    itemCanMove = components[i][getTarget[i]['type']]['canMove'](getTargetPosition[0], getTargetPosition[1]) && getCanMove(getTargetPosition)
+                    itemCanMove = components[i][getTarget[i]['type']]['canMove'](position, getTargetPosition) && getCanMove(getTargetPosition)
                     if(itemCanMove){
                         needMove.push([position[0]+adjustment[0], position[1]+adjustment[1]])
                     }else{
                         needMove = []
                     }
                 }
+            }else if(getTarget['wall']?.['type']==undefined){
+                wallCanMove = components['wall']['wall']['canMove'](position, getTargetPosition)
             }
         }
         return canMove && wallCanMove && itemCanMove

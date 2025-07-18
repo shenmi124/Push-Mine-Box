@@ -3,22 +3,28 @@ var components = {
         information: {
             canMove(){return true},
             draw: {
-                fill(){return '#fff0'},
+                fill(){return '#fff'},
                 text(){return '?'},
                 textSize(){return 3},
                 textColor(){return 'blue'}
             },
         },
         wall: {
-            canMove(){return false},
+            canMove(targetPosition, position){
+                if(player.data.grid['x'+targetPosition[0]+'y'+targetPosition[1]].item.type=='quantumBox'){
+                    return true
+                }
+                return false
+            },
             draw: {
-                fill(){return 'lightgrey'}
+                fill(){return '#e9e9e9'},
+                strokeWidth(){return 0},
             },
         },
         blank: {
             canMove(){return true},
             draw: {
-                fill(){return '#fff0'},
+                fill(){return '#fff'},
             },
         },
         enter: {
@@ -40,8 +46,9 @@ var components = {
                     }
                     return '#00dd00'
                 },
+                strokeWidth(){return 0},
                 text(x, y){return World[player.data.grid['x'+x+'y'+y].wall.code]?.data?.name ?? player.data.grid['x'+x+'y'+y].wall.code},
-                textSize(x, y){return 3 * (World[player.data.grid['x'+x+'y'+y].wall.code]?.data?.name?.length ?? player.data.grid['x'+x+'y'+y].wall.code.length)}
+                textSize(x, y){return 3}
             },
         },
         finish: {
@@ -84,6 +91,7 @@ var components = {
             draw: {
                 position(){return Position.PlayerPositon},
                 shapes(){return 'circle'},
+                strokeWidth(){return 2},
                 fill(x, y){
                     if(player.data.grid['x'+x+'y'+y]?.item?.arrow){
                         return 'lightgreen'
@@ -97,6 +105,7 @@ var components = {
             draw: {
                 position(){return Position.DeadPlayerPositon},
                 shapes(){return 'circle'},
+                strokeWidth(){return 2},
                 fill(){
                     return 'lightcoral'
                 }
@@ -107,14 +116,31 @@ var components = {
             draw: {
                 position(){return Position.BoxPosition},
                 shapes(){return 'rect'},
+                strokeWidth(){return 2},
                 fill(){return 'grey'},
             },
         },
+        quantumBox: {
+            canMove(targetPosition, position){
+                if(player.data.grid['x'+position[0]+'y'+position[1]]?.wall?.type==undefined){
+                    if(player.data.grid['x'+targetPosition[0]+'y'+targetPosition[1]].item.arrow){
+                        return false
+                    }
+                }
+                return true
+            },
+            draw: {
+                position(){return Position.QuantumBoxPosition},
+                shapes(){return 'rect'},
+                fill(){return '#ff00ff22'},
+            },
+        },
         clue: {
-            canMove(x, y){return getFlagAmount(x, y)!=='danger'},
+            canMove(targetPosition, position){return getFlagAmount(position[0], position[1])!=='danger'},
             draw: {
                 position(){return Position.CluePosition},
                 shapes(){return 'rect'},
+                strokeWidth(){return 2},
                 fill(){return '#fff0'},
                 text(x, y){return player.data.grid['x'+x+'y'+y].item.code},
                 textColor(x, y){
@@ -146,6 +172,7 @@ var components = {
             draw: {
                 position(){return Position.FlagPosition},
                 shapes(){return 'rect'},
+                strokeWidth(){return 2},
                 fill(){return '#fff0'},
                 text(){return 'F'},
             },

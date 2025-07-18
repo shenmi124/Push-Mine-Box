@@ -4,6 +4,7 @@ var Position = {
     PlayerPositon: [],
     DeadPlayerPositon: [],
     BoxPosition: [],
+    QuantumBoxPosition: [],
     CluePosition: [],
     FlagPosition: [],
 
@@ -47,11 +48,11 @@ function getPosition(){
 }
 
 function getScreenSize(col, row){
-    MaxCol = Math.max(MaxCol, col + 1)
-    MinCol = Math.min(MinCol, col - 1)
+    MaxCol = Math.max(MaxCol, col + 2)
+    MinCol = Math.min(MinCol, col - 2)
 
-    MaxRow = Math.max(MaxRow, row + 1)
-    MinRow = Math.min(MinRow, row - 1)
+    MaxRow = Math.max(MaxRow, row + 2)
+    MinRow = Math.min(MinRow, row - 2)
 }
 
 function changeScreenSize(){

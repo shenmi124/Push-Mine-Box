@@ -69,19 +69,29 @@ const createElement = {
         for(let col = 0; col<this.col; col++){
             for(let row = 0; row<this.row; row++){
                 let element = player.data.grid['x'+Number(col-adjustmentX)+'y'+Number(row-adjustmentY)]?.wall?.type
+                element ??= 'wall'
 
+                let stroke = 0
                 const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
-                rect.setAttribute('width', r)
-                rect.setAttribute('height', r)
-                rect.setAttribute('x', extraX + col * r)
-                rect.setAttribute('y', extraY + row * r)
+                rect.setAttribute('shape-rendering', 'crispedges')
                 if(components.wall[element]?.draw?.fill!==undefined){
                     rect.setAttribute('fill', components.wall[element]?.draw?.fill(col-adjustmentX, row-adjustmentY))
                 }else{
-                    rect.setAttribute('fill', 'lightgrey')
+                    rect.setAttribute('fill', components.wall.wall.draw.fill())
                 }
-                rect.setAttribute('stroke', 'black')
-                rect.setAttribute('stroke-width', '2')
+                if(components.wall[element]?.draw?.strokeWidth!==undefined){
+                    rect.setAttribute('stroke-width', components.wall[element].draw.strokeWidth())
+                    stroke = components.wall[element].draw.strokeWidth()
+                    if(components.wall[element]?.draw?.stroke!==undefined){
+                        rect.setAttribute('stroke', components.wall[element].draw.stroke())
+                    }else{
+                        rect.setAttribute('stroke', 'black')
+                    }
+                }
+                rect.setAttribute('width', r - stroke)
+                rect.setAttribute('height', r - stroke)
+                rect.setAttribute('x', extraX + col * r + (stroke/2))
+                rect.setAttribute('y', extraY + row * r + (stroke/2))
                 rect.setAttribute('id', (element??'wall')+'x'+Number(col-adjustmentX)+'y'+Number(row-adjustmentY))
                 this.container.appendChild(rect)
 
@@ -128,22 +138,29 @@ function createItemElementNS(draw, type, r, extra, adjustment){
     for(let i in drawPosition){
         let position = drawPosition[i]
 
+        let stroke = 0
         const element = document.createElementNS('http://www.w3.org/2000/svg', elementShapes)
-
+        element.setAttribute('fill', draw.fill(position[0], position[1]))
+        if(draw?.strokeWidth!==undefined){
+            element.setAttribute('stroke-width', draw.strokeWidth())
+            stroke = draw.strokeWidth()
+            if(draw?.stroke!==undefined){
+                element.setAttribute('stroke', draw.stroke())
+            }else{
+                element.setAttribute('stroke', 'black')
+            }
+        }
         if(elementShapes=='circle'){ 
-            element.setAttribute('r', r / 2)
+            element.setAttribute('r', r / 2 - (stroke/2))
             element.setAttribute('cx', extra[0] + (position[0] + adjustment[0]) * r + r / 2)
             element.setAttribute('cy', extra[1] + (position[1] + adjustment[1]) * r + r / 2)
         }else if(elementShapes=='rect'){
-            element.setAttribute('width', r)
-            element.setAttribute('height', r)
-            element.setAttribute('x', extra[0] + (position[0] + adjustment[0]) * r)
-            element.setAttribute('y', extra[1] + (position[1] + adjustment[1]) * r)
+            element.setAttribute('shape-rendering', 'crispedges')
+            element.setAttribute('width', r - stroke)
+            element.setAttribute('height', r - stroke)
+            element.setAttribute('x', extra[0] + (position[0] + adjustment[0]) * r + (stroke/2))
+            element.setAttribute('y', extra[1] + (position[1] + adjustment[1]) * r + (stroke/2))
         }
-
-        element.setAttribute('fill', draw.fill(position[0], position[1]))
-        element.setAttribute('stroke', '#000')
-        element.setAttribute('stroke-width', '2')
         element.setAttribute('id', type+'x'+position[0]+'y'+position[1])
         document.querySelector('.container').appendChild(element)
         

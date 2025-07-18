@@ -103,6 +103,13 @@ window.onkeydown = function(e){
                 editCode = ''
                 loadConsloe()
             }
+            if(e.keyCode===78){
+                editMod = 'item'
+                editData = 'item'
+                editType = 'quantumBox'
+                editCode = ''
+                loadConsloe()
+            }
             if(e.keyCode>=48 && e.keyCode<=56){
                 editMod = 'item'
                 editData = 'item'
@@ -137,6 +144,10 @@ window.onkeydown = function(e){
                 editType = 'information'
                 editCode = prompt('信息')
                 loadConsloe()
+            }
+
+            if(e.keyCode===67){
+                inputLevel(World['create'])
             }
         }
     }
